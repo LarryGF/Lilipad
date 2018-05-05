@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LiliPad</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="node_modules/vue-material/dist/vue-material.css">
+    <link rel="stylesheet" href="node_modules/vue-material/dist/theme/default.css">
+    </head>
+
+<body>
+
+    <div id='app'>
+        <script type='text/javascript' src='/eel.js'></script>
+        <script type='text/javascript'>
+
+
+        </script>
+    
+        <div>
+            <md-tabs class="md-primary" md-alignment="centered" :md-active-tab.sync="step" >
+                <md-tab id="paso1" md-label="Paso 1" >
+                    <md-field>
+                        <label>Usuarios actuales</label>
+                        <md-input v-model="actuales" type="number"></md-input>
+                    </md-field>
+
+                    <md-field>
+                        <label>Usuarios nuevos</label>
+                        <md-input v-model="nuevos" type="number"></md-input>
+                    </md-field>
+
+                    <md-field>
+                        <label>Usuarios futuros</label>
+                        <md-input v-model="futuros" type="number"></md-input>
+                    </md-field>
+
+                    <md-button class="md-raised md-primary" @click="send(1,{usract:actuales,usrnew:nuevos,usrfutr:futuros,})">Crear</md-button>
+                </md-tab>
+
+                <md-tab id="paso2" md-label="Paso 2" >
+                
+                </md-tab>
+
+                <md-tab id="paso3" md-label="Paso 3" >
+                
+                </md-tab>
+
+                <md-tab id="paso4" md-label="Paso 4" >
+                
+                </md-tab>
+
+                <md-tab id="paso5" md-label="Paso 5" >
+                
+                </md-tab>
+                
+            </md-tabs>
+
+<script src="node_modules/vue/dist/vue.min.js"></script>
+<script src="node_modules/vue-material/dist/vue-material.js"></script>
+
+<script>
+    Vue.use(VueMaterial.default)
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            step:'paso1',
+           actuales:'',
+           nuevos:'',
+           futuros:'',
+                },
+        computed: {
+
+        },
+        methods: {
+            send(paso,dict){
+                console.log(paso)
+                console.log(dict)
+                paso = paso +1
+                app.step = "paso"+paso
+                
+            }
+        }
+    })
+</script>
+    </div>
+
+
+
+</body>            

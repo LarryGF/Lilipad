@@ -6,198 +6,182 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="node_modules/vue-material/dist/vue-material.css">
 	<link rel="stylesheet" href="node_modules/vue-material/dist/theme/default.css">
-	</head>
+</head>
 
 <body>
-
 	<div id='app'>
 		<script type='text/javascript' src='/eel.js'></script>
 		<script type='text/javascript'>
 
 
 		</script>
-	
+
 		<div>
 			<md-tabs class="md-primary" md-alignment="centered" :md-active-tab.sync="step" >
-				<md-tab id="paso1" md-label="Paso 1" >
+			<md-tab id="paso1" md-label="Paso 1" >
+				<md-field>
+					<label>Usuarios actuales</label>
+					<md-input v-model="actuales" type="number"></md-input>
+				</md-field>
+
+				<md-field>
+					<label>Usuarios nuevos</label>
+					<md-input v-model="nuevos" type="number"></md-input>
+				</md-field>
+
+				<md-field>
+					<label>Usuarios futuros</label>
+					<md-input v-model="futuros" type="number"></md-input>
+				</md-field>
+
+				<md-button class="md-raised md-primary" @click="send(1,{usract:actuales,usrnew:nuevos,usrfutr:futuros,})">Guardar</md-button>
+			</md-tab>
+
+			<md-tab id="paso2" md-label="Paso 2" >
+				<div>
+					<md-table v-model="serv_existentes" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Servicios Existentes</h1>
+							<md-button class="md-raised md-primary" @click="change('existente')">Nuevo</md-button>
+						</md-table-toolbar>
+
+						<md-table-row slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
+							<md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
+							<md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
+							<md-table-cell md-label="Estructura" md-sort-by="structure">{{ item.structure }}</md-table-cell>
+							<md-table-cell md-label="Criticidad" md-sort-by="int">{{ item.criticity }}</md-table-cell>
+							<md-table-cell md-label="Comentarios" md-sort-by="comments">{{ item.comments }}</md-table-cell>							
+						</md-table-row>
+					</md-table>
+				</div>
+				
+				<div>
+					<md-table v-model="serv_nuevos" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Servicios Nuevos</h1> 
+							<md-button class="md-raised md-primary"  @click="change('nuevo')">Nuevo</md-button>
+						</md-table-toolbar>
+
+					<md-table-row slot="md-table-row" slot-scope="{ item }">
+						<md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
+						<md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
+						<md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
+						<md-table-cell md-label="Estructura" md-sort-by="structure">{{ item.structure }}</md-table-cell>
+						<md-table-cell md-label="Criticidad" md-sort-by="int">{{ item.criticity }}</md-table-cell>
+						<md-table-cell md-label="Comentarios" md-sort-by="comments">{{ item.comments }}</md-table-cell>
+					</md-table-row>
+
+					</md-table>
+				</div>
+				
+				<div>
+					<md-table v-model="serv_futuros" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Servicios Futuros</h1>
+							<md-button class="md-raised md-primary"  @click="change('futuro')">Nuevo</md-button>		
+						</md-table-toolbar>
+
+					<md-table-row slot="md-table-row" slot-scope="{ item }">
+						<md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
+						<md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
+						<md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
+						<md-table-cell md-label="Estructura" md-sort-by="structure">{{ item.structure }}</md-table-cell>
+						<md-table-cell md-label="Criticidad" md-sort-by="int">{{ item.criticity }}</md-table-cell>
+						<md-table-cell md-label="Comentarios" md-sort-by="comments">{{ item.comments }}</md-table-cell>
+					</md-table-row>
+					
+					</md-table>
+				</div>
+			</md-tab>
+
+			<md-tab id="paso3" md-label="Paso 3" >
+
+			</md-tab>
+
+			<md-tab id="paso4" md-label="Paso 4" >
+
+			</md-tab>
+
+			<md-tab id="paso5" md-label="Paso 5" >
+
+			</md-tab>
+
+		</md-tabs>
+
+		<script src="node_modules/vue/dist/vue.min.js"></script>
+		<script src="node_modules/vue-material/dist/vue-material.js"></script>
+
+		<md-dialog :md-active.sync="add_srv" :md-click-outside-to-close="false">
+
+			<md-tabs md-dynamic-height class="md-primary">
+				<md-tab md-label="Crear Anuncio">
 					<md-field>
-						<label>Usuarios actuales</label>
-						<md-input v-model="actuales" type="number"></md-input>
+						<label>Nombre</label>
+						<md-input v-model="srv_name" required></md-input>
 					</md-field>
 
 					<md-field>
-						<label>Usuarios nuevos</label>
-						<md-input v-model="nuevos" type="number"></md-input>
+						<label>Tipo</label>
+						<md-input v-model="srv_type" required></md-input>
 					</md-field>
+
+					<select v-model="srv_class" >
+						<option disabled value="">Clasificacion</option>
+						<option value="Usuario">Usuario</option>
+						<option value="Soporte">Soporte</option>
+					</select>
+
+					<select v-model="srv_structure" >
+						<option disabled value="">Estructura</option>
+						<option value="Single Tier">Single Tier</option>
+						<option value="Multi Tier">Multi Tier</option>
+					</select>
+
+					<select v-model="srv_criticity" >
+						<option disabled value="">Criticidad</option>
+						<option  value="0Baja">Baja</option>
+						<option  value="1Media">Media</option>
+						<option  value="2Alta">Alta</option>
+					</select>
 
 					<md-field>
-						<label>Usuarios futuros</label>
-						<md-input v-model="futuros" type="number"></md-input>
+						<label>Comentarios</label>
+						<md-input v-model="srv_comments" required></md-input>
 					</md-field>
 
-					<md-button class="md-raised md-primary" @click="send(1,{usract:actuales,usrnew:nuevos,usrfutr:futuros,})">Guardar</md-button>
 				</md-tab>
-
-				<md-tab id="paso2" md-label="Paso 2" >
-						<div>
-							<md-table v-model="serv_existentes" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-								<md-table-toolbar>
-									<h1 class="md-title">Servicios Existentes</h1>
-									<md-button class="md-raised md-primary" @click="change('existente')">Nuevo</md-button>
-									
-								</md-table-toolbar>
-						
-						
-								<md-table-row slot="md-table-row" slot-scope="{ item }">
-									<md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
-									<md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
-									<md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
-									<md-table-cell md-label="Estructura" md-sort-by="structure">{{ item.structure }}</md-table-cell>
-									<md-table-cell md-label="Criticidad" md-sort-by="int">{{ item.criticity }}</md-table-cell>
-									<md-table-cell md-label="Comentarios" md-sort-by="comments">{{ item.comments }}</md-table-cell>
-									
-								</md-table-row>
-							</md-table>
-						</div>
-						<div>
-							<md-table v-model="serv_nuevos" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-								<md-table-toolbar>
-									<h1 class="md-title">Servicios Nuevos</h1> 
-									<md-button class="md-raised md-primary"  @click="change('nuevo')">Nuevo</md-button>
-									
-								</md-table-toolbar>
-						
-						
-								<md-table-row slot="md-table-row" slot-scope="{ item }">
-									<md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
-									<md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
-									<md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
-									<md-table-cell md-label="Estructura" md-sort-by="structure">{{ item.structure }}</md-table-cell>
-									<md-table-cell md-label="Criticidad" md-sort-by="int">{{ item.criticity }}</md-table-cell>
-									<md-table-cell md-label="Comentarios" md-sort-by="comments">{{ item.comments }}</md-table-cell>
-						
-								</md-table-row>
-								
-							</md-table>
-						</div>
-						<div>
-							<md-table v-model="serv_futuros" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-								<md-table-toolbar>
-									<h1 class="md-title">Servicios Futuros</h1>
-									<md-button class="md-raised md-primary"  @click="change('futuro')">Nuevo</md-button>
-									
-								</md-table-toolbar>
-						
-						
-								<md-table-row slot="md-table-row" slot-scope="{ item }">
-									<md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
-									<md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
-									<md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
-									<md-table-cell md-label="Estructura" md-sort-by="structure">{{ item.structure }}</md-table-cell>
-									<md-table-cell md-label="Criticidad" md-sort-by="int">{{ item.criticity }}</md-table-cell>
-									<md-table-cell md-label="Comentarios" md-sort-by="comments">{{ item.comments }}</md-table-cell>
-						
-								</md-table-row>
-							</md-table>
-						</div>
-				</md-tab>
-
-				<md-tab id="paso3" md-label="Paso 3" >
-				
-				</md-tab>
-
-				<md-tab id="paso4" md-label="Paso 4" >
-				
-				</md-tab>
-
-				<md-tab id="paso5" md-label="Paso 5" >
-				
-				</md-tab>
-				
 			</md-tabs>
 
-<script src="node_modules/vue/dist/vue.min.js"></script>
-<script src="node_modules/vue-material/dist/vue-material.js"></script>
-
-<md-dialog :md-active.sync="add_srv" :md-click-outside-to-close="false">
-
-	<md-tabs md-dynamic-height class="md-primary">
-		<md-tab md-label="Crear Anuncio">
-						<md-field>
-							<label>Nombre</label>
-							<md-input v-model="srv_name" required></md-input>
-						</md-field>
-
-						<md-field>
-							<label>Tipo</label>
-							<md-input v-model="srv_type" required></md-input>
-						</md-field>
-						
-
-				<select v-model="srv_class" >
-					<option disabled value="">Clasificacion</option>
-					<option value="Usuario">Usuario</option>
-					<option value="Soporte">Soporte</option>
-				</select>
-
-
-				<select v-model="srv_structure" >
-					<option disabled value="">Estructura</option>
-					<option value="Single Tier">Single Tier</option>
-					<option value="Multi Tier">Multi Tier</option>
-				</select>
+			<md-dialog-actions>
+				<md-button class="md-primary" @click="new_service({'name':srv_name,'type':srv_type,'class':srv_class,'structure':srv_structure,'criticity':srv_criticity,'comments':srv_comments,'int':srv_criticity[0]})">Crear</md-button>
+			</md-dialog-actions>
 			
-
-			
-				<select v-model="srv_criticity" >
-					<option disabled value="">Criticidad</option>
-					<option  value="0Baja">Baja</option>
-					<option  value="1Media">Media</option>
-					<option  value="2Alta">Alta</option>
-				</select>
-			
+			<md-dialog-actions>
+				<md-button class="md-primary" @click="add_srv=false,srv_class='',srv_comments=null,srv_criticity='',srv_name=null,srv_structure='',srv_type=null">Cerrar</md-button>
+			</md-dialog-actions>
+		</md-dialog>
 
 
-			<md-field>
-				<label>Comentarios</label>
-				<md-input v-model="srv_comments" required></md-input>
-			</md-field>
-			
+		<script>Vue.use(VueMaterial.default)
 
-		</md-tab>
-	</md-tabs>
-
-	<md-dialog-actions>
-		<md-button class="md-primary" @click="new_service({'name':srv_name,'type':srv_type,'class':srv_class,'structure':srv_structure,'criticity':srv_criticity,'comments':srv_comments,'int':srv_criticity[0]})">Crear</md-button>
-
-	</md-dialog-actions>
-	<md-dialog-actions>
-		<md-button class="md-primary" @click="add_srv=false,srv_class='',srv_comments=null,srv_criticity='',srv_name=null,srv_structure='',srv_type=null">Cerrar</md-button>
-	</md-dialog-actions>
-</md-dialog>
-
-
-<script>
-	Vue.use(VueMaterial.default)
-
-	const app = new Vue({
-		el: "#app",
-		data: {
-			new_srv:'',
-			add_srv:false,
-			step:'paso1',
-			actuales:'',
-		   nuevos:'',
-		   futuros:'',
-		   srv_name:'',
-		   srv_type:'',
-		   srv_class:'',
-		   srv_structure:'',
-		   srv_criticity:'',
-		   srv_comments:'',
-			serv_existentes: [
-				
-				{
+		const app = new Vue({
+			el: "#app",
+			data: {
+				new_srv:'',
+				add_srv:false,
+				step:'paso1',
+				actuales:'',
+				nuevos:'',
+				futuros:'',
+				srv_name:'',
+				srv_type:'',
+				srv_class:'',
+				srv_structure:'',
+				srv_criticity:'',
+				srv_comments:'',
+				serv_existentes: [
+					{
 					name: 'Zabbix',
 					type: 'inutil',
 					class: 'Soporte',
@@ -205,8 +189,8 @@
 					criticity:'Baja',
 					int:'0',
 					comments:'No le importa a nadie',
-				},
-				{
+					},
+					{
 					name: 'Navegacion',
 					type: 'Squid',
 					class: 'Soporte',
@@ -214,8 +198,8 @@
 					criticity: 'Alta',
 					int:'2',
 					comments: 'Sin esto la gente se suicida',
-				},
-				{
+					},
+					{
 					name: 'Navegacion',
 					type: 'DNS',
 					class: 'Soporte',
@@ -223,12 +207,11 @@
 					criticity: 'Media',
 					int:'1',
 					comments: 'Sin esto la gente no puede ir a facebook',
-				},
-			],
+					},
+				],
 
-			serv_nuevos: [
-
-				{
+				serv_nuevos: [
+					{
 					name: 'Zabbix1',
 					type: 'inutil',
 					class: 'Soporte',
@@ -236,8 +219,8 @@
 					criticity: 'Baja',
 					int: '0',
 					comments: 'No le importa a nadie',
-				},
-				{
+					},
+					{
 					name: 'Navegacion',
 					type: 'Squid',
 					class: 'Soporte',
@@ -245,8 +228,8 @@
 					criticity: 'Alta',
 					int: '2',
 					comments: 'Sin esto la gente se suicida',
-				},
-				{
+					},
+					{
 					name: 'Navegacion',
 					type: 'DNS',
 					class: 'Soporte',
@@ -254,11 +237,10 @@
 					criticity: 'Media',
 					int: '1',
 					comments: 'Sin esto la gente no puede ir a facebook',
-				},
-			],
-			serv_futuros: [
-
-				{
+					},
+				],
+				serv_futuros: [
+					{
 					name: 'Zabbix2',
 					type: 'inutil',
 					class: 'Soporte',
@@ -266,8 +248,8 @@
 					criticity: 'Baja',
 					int: '0',
 					comments: 'No le importa a nadie',
-				},
-				{
+					},
+					{
 					name: 'Navegacion',
 					type: 'Squid',
 					class: 'Soporte',
@@ -275,8 +257,8 @@
 					criticity: 'Alta',
 					int: '2',
 					comments: 'Sin esto la gente se suicida',
-				},
-				{
+					},
+					{
 					name: 'Navegacion',
 					type: 'DNS',
 					class: 'Soporte',
@@ -284,43 +266,40 @@
 					criticity: 'Media',
 					int: '1',
 					comments: 'Sin esto la gente no puede ir a facebook',
-				},
-			],
+					},
+				],
 
-		   
-				},
-		computed: {
 
-		},
-		methods: {
-			send(paso,dict){
-				console.log(paso)
-				console.log(dict)
-				paso = paso +1
-				app.step = "paso"+paso
-				console.log(app.step)
-				
 			},
-			change(serv){
-				app.add_srv=true
-				app.new_srv=serv
-				
-				
+			computed: {
+
 			},
-			new_service(dict){
-				console.log(app.new_srv)
-				console.log(dict)
-				app.srv_name= '',
-				app.srv_type= '',
-				app.srv_class= '',
-				app.srv_structure= '',
-				app.srv_criticity= '',
-				app.srv_comments= '',
-				add_srv=false
+			methods: {
+				send(paso,dict){
+					console.log(paso)
+					console.log(dict)
+					paso = paso +1
+					app.step = "paso"+paso
+					console.log(app.step)
+				},
+				change(serv){
+					app.add_srv=true
+					app.new_srv=serv
+				},
+				new_service(dict){
+					console.log(app.new_srv)
+					console.log(dict)
+					app.srv_name= '',
+					app.srv_type= '',
+					app.srv_class= '',
+					app.srv_structure= '',
+					app.srv_criticity= '',
+					app.srv_comments= '',
+					add_srv=false
+				}
 			}
-		}
-	})
-</script>
+		})
+		</script>
 	</div>
 
 

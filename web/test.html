@@ -18,33 +18,36 @@
         </script>
 
        
-        <div>
-            <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-                <md-table-toolbar>
-                    <h1 class="md-title">Users</h1>
-                </md-table-toolbar>
-                
-                
-                <md-table-row slot="md-table-row" slot-scope="{ item }">
-                    <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
-                    <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
-                    <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
-                    <md-table-cell md-label="Gender" md-sort-by="gender">{{ item.gender }}</md-table-cell>
-                    <md-table-cell md-label="Job Title" md-sort-by="title">{{ item.title }}</md-table-cell>
-                     
-                </md-table-row>         
-                
-                <md-table-row slot="md-table-row2">
-                    <md-table-cell md-label="ID">loren</md-table-cell>
-                    <md-table-cell md-label="Name" md-sort-by="name">asd</md-table-cell>
-                    <md-table-cell md-label="Email" md-sort-by="email">w</md-table-cell>
-                    <md-table-cell md-label="Gender" md-sort-by="gender">wefwe</md-table-cell>
-                    <md-table-cell md-label="Job Title" md-sort-by="title">asdf</md-table-cell>
-                </md-table-row>
-               
-        </div>
+<div>
+    <md-checkbox v-model="array" value="1">Array</md-checkbox>
+    <md-checkbox v-model="array" value="2">Array</md-checkbox>
+    <md-checkbox v-model="boolean">Boolean</md-checkbox>
+    <md-checkbox v-model="string" value="my-checkbox">String</md-checkbox>
+    <md-checkbox v-model="novalue">No Value</md-checkbox>
+    <md-checkbox v-model="disabled" disabled>Disabled</md-checkbox>
+    <md-checkbox v-model="obj" :value="obj1">Object 1</md-checkbox>
+    <md-checkbox v-model="obj" :value="obj2">Object 2</md-checkbox>
 
+    <md-checkbox v-model="indeterminate" indeterminate>Indeterminate</md-checkbox>
 
+    <table>
+        <tr>
+            <th>Array</th>
+            <th>Boolean</th>
+            <th>String</th>
+            <th>No Value</th>
+            <th>Object</th>
+        </tr>
+
+        <tr>
+            <td>{{ array }}</td>
+            <td>{{ boolean }}</td>
+            <td>{{ string }}</td>
+            <td>{{ novalue }}</td>
+            <td>{{ obj }}</td>
+        </tr>
+    </table>
+</div>
 
             <script src="node_modules/vue/dist/vue.min.js"></script>
             <script src="node_modules/vue-material/dist/vue-material.js"></script>
@@ -94,9 +97,20 @@
                                 email: 'cmarietonh@theatlantic.com',
                                 gender: 'Female',
                                 title: 'Paralegal'
-                            }
+                            },
                             
-                        ]
+                            
+                        ],
+                              array: [],
+                        boolean: false,
+                        string: null,
+                        novalue: null,
+                        disabled: true,
+                        obj1: { name: 'obj1' },
+                        obj2: { name: 'obj2' },
+                        obj: null,
+                        indeterminate: true
+
 
                     },
                     computed: {

@@ -96,7 +96,19 @@
 			</md-tab>
 
 			<md-tab id="paso3" md-label="Paso 3" >
+				<div v-if='!selected'>
+					<h2>Seleccione una o ambas opciones</h2>
+				<div>
+					<md-checkbox v-model="iaas" class="md-primary">IaaS</md-checkbox>
+					<md-checkbox v-model="dsaas" class="md-primary">DaaS</md-checkbox>
+				</div>
 
+				<md-button class="md-raised md-primary" @click="selected=true">Aceptar</md-button>
+
+				</div>
+
+				<div v-if='selected & iaas'>Aqui va la tabla IaaS</div>
+				<div v-if='selected & dsaas'>Aqui va la tabla DSaaS</div>
 			</md-tab>
 
 			<md-tab id="paso4" md-label="Paso 4" >
@@ -168,6 +180,9 @@
 		const app = new Vue({
 			el: "#app",
 			data: {
+				selected:false,
+				iaas:false,
+				dsaas:false,
 				new_srv:'',
 				add_srv:false,
 				step:'paso1',
@@ -296,7 +311,10 @@
 					app.srv_criticity= '',
 					app.srv_comments= '',
 					add_srv=false
-				}
+				},
+				
+
+				
 			}
 		})
 		</script>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LiliPad</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="node_modules/vue-material/dist/vue-material.css">
+    <link rel="stylesheet" href="node_modules/vue-material/dist/theme/default.css">
+</head>
+
+<body>
+
+    <div id='app'>
+        <script type='text/javascript' src='/eel.js'></script>
+        <script type='text/javascript'>
+
+
+        </script>
+
+       
+        <div>
+            <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+                <md-table-toolbar>
+                    <h1 class="md-title">Users</h1>
+                </md-table-toolbar>
+                
+                
+                <md-table-row slot="md-table-row" slot-scope="{ item }">
+                    <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell>
+                    <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+                    <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
+                    <md-table-cell md-label="Gender" md-sort-by="gender">{{ item.gender }}</md-table-cell>
+                    <md-table-cell md-label="Job Title" md-sort-by="title">{{ item.title }}</md-table-cell>
+                     
+                </md-table-row>         
+                
+                <md-table-row slot="md-table-row2">
+                    <md-table-cell md-label="ID">loren</md-table-cell>
+                    <md-table-cell md-label="Name" md-sort-by="name">asd</md-table-cell>
+                    <md-table-cell md-label="Email" md-sort-by="email">w</md-table-cell>
+                    <md-table-cell md-label="Gender" md-sort-by="gender">wefwe</md-table-cell>
+                    <md-table-cell md-label="Job Title" md-sort-by="title">asdf</md-table-cell>
+                </md-table-row>
+               
+        </div>
+
+
+
+            <script src="node_modules/vue/dist/vue.min.js"></script>
+            <script src="node_modules/vue-material/dist/vue-material.js"></script>
+
+            <script>
+                Vue.use(VueMaterial.default)
+
+                const app = new Vue({
+                    el: "#app",
+                    data: {
+                        step: 'paso1',
+                        actuales: '',
+                        nuevos: '',
+                        futuros: '',
+                              users: [
+                            {
+                                id: 1,
+                                name: 'Shawna Dubbin',
+                                email: 'sdubbin0@geocities.com',
+                                gender: 'Male',
+                                title: 'Assistant Media Planner'
+                            },
+                            {
+                                id: 2,
+                                name: 'Odette Demageard',
+                                email: 'odemageard1@spotify.com',
+                                gender: 'Female',
+                                title: 'Account Coordinator'
+                            },
+                            {
+                                id: 3,
+                                name: 'Lonnie Izkovitz',
+                                email: 'lizkovitz3@youtu.be',
+                                gender: 'Female',
+                                title: 'Operator'
+                            },
+                            {
+                                id: 4,
+                                name: 'Thatcher Stave',
+                                email: 'tstave4@reference.com',
+                                gender: 'Male',
+                                title: 'Software Test Engineer III'
+                            },
+                            {
+                                id: 5,
+                                name: 'Clarinda Marieton',
+                                email: 'cmarietonh@theatlantic.com',
+                                gender: 'Female',
+                                title: 'Paralegal'
+                            }
+                            
+                        ]
+
+                    },
+                    computed: {
+
+                    },
+                    methods: {
+                        send(paso, dict) {
+                            console.log(paso)
+                            console.log(dict)
+                            paso = paso + 1
+                            app.step = "paso" + paso
+
+                        }
+                    }
+                })
+            </script>
+        </div>
+
+
+
+</body>

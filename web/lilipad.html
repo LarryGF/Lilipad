@@ -35,11 +35,71 @@
                         <md-input v-model="futuros" type="number"></md-input>
                     </md-field>
 
-                    <md-button class="md-raised md-primary" @click="send(1,{usract:actuales,usrnew:nuevos,usrfutr:futuros,})">Crear</md-button>
+                    <md-button class="md-raised md-primary" @click="send(1,{usract:actuales,usrnew:nuevos,usrfutr:futuros,})">Guardar</md-button>
                 </md-tab>
 
                 <md-tab id="paso2" md-label="Paso 2" >
-                
+                        <div>
+                            <md-table v-model="serv_existentes" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+                                <md-table-toolbar>
+                                    <h1 class="md-title">Servicios Existentes</h1>
+                                    <md-button class="md-raised md-primary" @click="send(1,{usract:actuales,usrnew:nuevos,usrfutr:futuros,})">Nuevo</md-button>
+                                    
+                                </md-table-toolbar>
+                        
+                        
+                                <md-table-row slot="md-table-row" slot-scope="{ item }">
+                                    <md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
+                                    <md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
+                                    <md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
+                                    <md-table-cell md-label="Estructura" md-sort-by="structure">{{ item.structure }}</md-table-cell>
+                                    <md-table-cell md-label="Criticidad" md-sort-by="int">{{ item.criticity }}</md-table-cell>
+                                    <md-table-cell md-label="Comentarios" md-sort-by="comments">{{ item.comments }}</md-table-cell>
+                                    
+                                </md-table-row>
+                            </md-table>
+                        </div>
+                        <div>
+                            <md-table v-model="serv_nuevos" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+                                <md-table-toolbar>
+                                    <h1 class="md-title">Servicios Nuevos</h1> 
+                                    <md-button class="md-raised md-primary" @click="send(1,{usract:actuales,usrnew:nuevos,usrfutr:futuros,})">Nuevo</md-button>
+                                    
+                                </md-table-toolbar>
+                        
+                        
+                                <md-table-row slot="md-table-row" slot-scope="{ item }">
+                                    <md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
+                                    <md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
+                                    <md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
+                                    <md-table-cell md-label="Estructura" md-sort-by="structure">{{ item.structure }}</md-table-cell>
+                                    <md-table-cell md-label="Criticidad" md-sort-by="int">{{ item.criticity }}</md-table-cell>
+                                    <md-table-cell md-label="Comentarios" md-sort-by="comments">{{ item.comments }}</md-table-cell>
+                        
+                                </md-table-row>
+                                
+                            </md-table>
+                        </div>
+                        <div>
+                            <md-table v-model="serv_futuros" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+                                <md-table-toolbar>
+                                    <h1 class="md-title">Servicios Futuros</h1>
+                                    <md-button class="md-raised md-primary" @click="send(1,{usract:actuales,usrnew:nuevos,usrfutr:futuros,})">Nuevo</md-button>
+                                    
+                                </md-table-toolbar>
+                        
+                        
+                                <md-table-row slot="md-table-row" slot-scope="{ item }">
+                                    <md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
+                                    <md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
+                                    <md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
+                                    <md-table-cell md-label="Estructura" md-sort-by="structure">{{ item.structure }}</md-table-cell>
+                                    <md-table-cell md-label="Criticidad" md-sort-by="int">{{ item.criticity }}</md-table-cell>
+                                    <md-table-cell md-label="Comentarios" md-sort-by="comments">{{ item.comments }}</md-table-cell>
+                        
+                                </md-table-row>
+                            </md-table>
+                        </div>
                 </md-tab>
 
                 <md-tab id="paso3" md-label="Paso 3" >
@@ -65,10 +125,103 @@
     const app = new Vue({
         el: "#app",
         data: {
-            step:'paso1',
+            step:'paso2',
            actuales:'',
            nuevos:'',
            futuros:'',
+            serv_existentes: [
+                
+                {
+                    name: 'Zabbix',
+                    type: 'inutil',
+                    class: 'Soporte',
+                    structure: 'Single Tier',
+                    criticity:'Baja',
+                    int:'0',
+                    comments:'No le importa a nadie',
+                },
+                {
+                    name: 'Navegacion',
+                    type: 'Squid',
+                    class: 'Soporte',
+                    structure: 'Multi Tier',
+                    criticity: 'Alta',
+                    int:'2',
+                    comments: 'Sin esto la gente se suicida',
+                },
+                {
+                    name: 'Navegacion',
+                    type: 'DNS',
+                    class: 'Soporte',
+                    structure: 'Multi Tier',
+                    criticity: 'Media',
+                    int:'1',
+                    comments: 'Sin esto la gente no puede ir a facebook',
+                },
+            ],
+
+            serv_nuevos: [
+
+                {
+                    name: 'Zabbix1',
+                    type: 'inutil',
+                    class: 'Soporte',
+                    structure: 'Single Tier',
+                    criticity: 'Baja',
+                    int: '0',
+                    comments: 'No le importa a nadie',
+                },
+                {
+                    name: 'Navegacion',
+                    type: 'Squid',
+                    class: 'Soporte',
+                    structure: 'Multi Tier',
+                    criticity: 'Alta',
+                    int: '2',
+                    comments: 'Sin esto la gente se suicida',
+                },
+                {
+                    name: 'Navegacion',
+                    type: 'DNS',
+                    class: 'Soporte',
+                    structure: 'Multi Tier',
+                    criticity: 'Media',
+                    int: '1',
+                    comments: 'Sin esto la gente no puede ir a facebook',
+                },
+            ],
+            serv_futuros: [
+
+                {
+                    name: 'Zabbix2',
+                    type: 'inutil',
+                    class: 'Soporte',
+                    structure: 'Single Tier',
+                    criticity: 'Baja',
+                    int: '0',
+                    comments: 'No le importa a nadie',
+                },
+                {
+                    name: 'Navegacion',
+                    type: 'Squid',
+                    class: 'Soporte',
+                    structure: 'Multi Tier',
+                    criticity: 'Alta',
+                    int: '2',
+                    comments: 'Sin esto la gente se suicida',
+                },
+                {
+                    name: 'Navegacion',
+                    type: 'DNS',
+                    class: 'Soporte',
+                    structure: 'Multi Tier',
+                    criticity: 'Media',
+                    int: '1',
+                    comments: 'Sin esto la gente no puede ir a facebook',
+                },
+            ],
+
+           
                 },
         computed: {
 

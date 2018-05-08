@@ -146,7 +146,7 @@
 		<script src="node_modules/vue-material/dist/vue-material.js"></script>
 
 		<md-dialog :md-active.sync="add_srv" :md-click-outside-to-close="false">
-			<div></div>
+			<div v-if="new_srv != 'tab_serv'">
 			<md-tabs md-dynamic-height class="md-primary">
 				<md-tab md-label="Nuevo Servicio">
 					<md-field>
@@ -190,10 +190,41 @@
 				<md-button class="md-primary" @click="new_service(new_srv,{'name':srv_name,'type':srv_type,'class':srv_class,'structure':srv_structure,'criticity':srv_criticity,'comments':srv_comments,'int':srv_criticity[0]})">Crear</md-button>
 			</md-dialog-actions>
 			
-			<md-dialog-actions>
-				<md-button class="md-primary" @click="add_srv=false,srv_class='',srv_comments=null,srv_criticity='',srv_name=null,srv_structure='',srv_type=null">Cerrar</md-button>
-			</md-dialog-actions>
+			
 		</div>
+		<div v-if="new_srv == 'tab_serv'">
+			<md-tabs md-dynamic-height class="md-primary">
+				<md-tab md-label="Agregar a tabla de servicios">
+					<md-field>
+						<label>Servicio</label>
+						<md-input v-model="tab_service" required></md-input>
+					</md-field>
+		
+					<md-field>
+						<label>Subservicio</label>
+						<md-input v-model="tab_subservice" required></md-input>
+					</md-field>
+		
+					<md-field>
+						<label>Maquina Virtual</label>
+						<md-input v-model="tab_vm" required></md-input>
+					</md-field>
+					
+					<md-field>
+						<label>Nodo</label>
+						<md-input v-model="tab_node" required></md-input>
+					</md-field>
+				</md-tab>
+			</md-tabs>
+		
+			<md-dialog-actions>
+				<md-button class="md-primary" @click="new_service(new_srv,{'service':tab_service,'subservice':tab_subservice,'vmachine':tab_vm,'node':tab_node})">Crear</md-button>
+			</md-dialog-actions>
+		
+		</div>
+				<md-dialog-actions>
+					<md-button class="md-primary" @click="add_srv=false,srv_class='',srv_comments=null,srv_criticity='',srv_name=null,srv_structure='',srv_type=null,tab_service='',tab_subservice='',tab_vm='',tab_node=''">Cerrar</md-button>
+				</md-dialog-actions>
 		</md-dialog>
 
 
@@ -358,7 +389,7 @@
 							app.serv_futuros.push(dict);
 							break;
 							
-						case 'tabla':
+						case 'tab_serv':
 							app.tabla_servicios.push(dict)
 
 					}
@@ -369,7 +400,11 @@
 					app.srv_structure= '',
 					app.srv_criticity= '',
 					app.srv_comments= '',
-					add_srv=false
+					app.tab_service='',
+					app.tab_subservice='',
+					app.tab_vm='',
+					app.tab_node=''
+
 				},
 				
 

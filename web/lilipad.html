@@ -39,7 +39,7 @@
 
 			<md-tab id="paso2" md-label="Paso 2" >
 				<div>
-					<md-table v-model="tabla_servicios" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+					<md-table @md-selected="onSelect" v-model="tabla_servicios" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Servicios</h1>
 							<md-button class="md-raised md-primary" @click="send(2,tabla_servicios)">Guardar</md-button>
@@ -47,7 +47,7 @@
 							<md-button class="md-raised md-primary" @click="change('tab_serv')">Nuevo</md-button>
 						</md-table-toolbar>
 				
-						<md-table-row slot="md-table-row" slot-scope="{ item }">
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
 							<md-table-cell md-label="Servicio" md-sort-by="service" md-numeric>{{ item.service }}</md-table-cell>
 							<md-table-cell md-label="Subservicio" md-sort-by="subservice">{{ item.subservice }}</md-table-cell>
 							<md-table-cell md-label="Maquina Virtual" md-sort-by="vmachine">{{ item.vmachine }}</md-table-cell>
@@ -56,7 +56,7 @@
 					</md-table>
 				</div>
 				<div>
-					<md-table v-model="serv_existentes" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+					<md-table @md-selected="onSelect" v-model="serv_existentes" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Servicios Existentes</h1>
 							<md-button class="md-raised md-primary" @click="send(2,serv_existentes)">Guardar</md-button>
@@ -64,7 +64,7 @@
 							<md-button class="md-raised md-primary" @click="change('existente')">Nuevo</md-button>
 						</md-table-toolbar>
 
-						<md-table-row slot="md-table-row" slot-scope="{ item }">
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
 							<md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
 							<md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
 							<md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
@@ -76,14 +76,14 @@
 				</div>
 				
 				<div>
-					<md-table v-model="serv_nuevos" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+					<md-table @md-selected="onSelect" v-model="serv_nuevos" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Servicios Nuevos</h1> 
 							<md-button class="md-raised md-primary" @click="send(2,serv_nuevos)">Guardar</md-button>						
 							<md-button class="md-raised md-primary"  @click="change('nuevo')">Nuevo</md-button>
 						</md-table-toolbar>
 
-					<md-table-row slot="md-table-row" slot-scope="{ item }">
+					<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
 						<md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
 						<md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
 						<md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
@@ -96,14 +96,14 @@
 				</div>
 				
 				<div>
-					<md-table v-model="serv_futuros" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+					<md-table @md-selected="onSelect" v-model="serv_futuros" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Servicios Futuros</h1>
 							<md-button class="md-raised md-primary" @click="send(2,serv_futuros)">Guardar</md-button>
 							<md-button class="md-raised md-primary"  @click="change('futuro')">Nuevo</md-button>		
 						</md-table-toolbar>
 
-					<md-table-row slot="md-table-row" slot-scope="{ item }">
+					<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
 						<md-table-cell md-label="Nombre" md-sort-by="name" md-numeric>{{ item.name }}</md-table-cell>
 						<md-table-cell md-label="Tipo" md-sort-by="type">{{ item.type }}</md-table-cell>
 						<md-table-cell md-label="Clasificacion" md-sort-by="class">{{ item.class }}</md-table-cell>
@@ -406,7 +406,9 @@
 					app.tab_node=''
 
 				},
-				
+				onSelect(items) {
+					this.selected = items
+				},
 
 				
 			}

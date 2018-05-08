@@ -12,14 +12,48 @@
 		<div id='app'>
 			<script type='text/javascript' src='/eel.js'></script>
 			<script type='text/javascript'>
-				load_table(1)
-			async function load_table(table){
-				if (table == 1){
-					let value = await eel.load(1,'','')();
-					app.actuales = value['usract'];
-					app.nuevos = value['usrnew'];
-					app.futuros = value['usrfutr']
+				load_table(1,'')
+				load_table(2,'tab_serv')
+				load_table(2,'nuevos')
+				load_table(2,'existentes')
+				load_table(2,'futuros')
+				
+			async function load_table(step,table){
+				switch (step) {
+					case 1:
+						let value = await eel.load(1, '')();
+						app.actuales = value['usract'];
+						app.nuevos = value['usrnew'];
+						app.futuros = value['usrfutr'];
+						break;
 				}
+					
+				let value = await eel.load(step,table)();  
+				// poner app.new_srv
+				console.log(value)
+				console.log(table)
+				switch (table) {
+					case 'tab_serv':
+					console.log(table)
+					app.tabla_servicios = value;
+					break;
+
+					case 'nuevos':
+					console.log(table)
+					app.serv_nuevos = value;
+					break;
+
+					case 'existentes':
+
+					app.serv_existentes = value;
+					break;
+
+					case 'futuros':
+					app.serv_futuros = value;
+					break;
+				}
+				// break;
+				
 			}
 
 		</script>
@@ -69,7 +103,7 @@
 							<h1 class="md-title">Servicios Existentes</h1>
 							<md-button class="md-raised md-primary" @click="send(2,serv_existentes)">Guardar</md-button>
 							
-							<md-button class="md-raised md-primary" @click="change('existente')">Nuevo</md-button>
+							<md-button class="md-raised md-primary" @click="change('existentes')">Nuevo</md-button>
 						</md-table-toolbar>
 
 						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
@@ -88,7 +122,7 @@
 						<md-table-toolbar>
 							<h1 class="md-title">Servicios Nuevos</h1> 
 							<md-button class="md-raised md-primary" @click="send(2,serv_nuevos)">Guardar</md-button>						
-							<md-button class="md-raised md-primary"  @click="change('nuevo')">Nuevo</md-button>
+							<md-button class="md-raised md-primary"  @click="change('nuevos')">Nuevo</md-button>
 						</md-table-toolbar>
 
 					<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
@@ -108,7 +142,7 @@
 						<md-table-toolbar>
 							<h1 class="md-title">Servicios Futuros</h1>
 							<md-button class="md-raised md-primary" @click="send(2,serv_futuros)">Guardar</md-button>
-							<md-button class="md-raised md-primary"  @click="change('futuro')">Nuevo</md-button>		
+							<md-button class="md-raised md-primary"  @click="change('futuros')">Nuevo</md-button>		
 						</md-table-toolbar>
 
 					<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
@@ -263,105 +297,105 @@
 				tab_node:'',
 
 				tabla_servicios:[
-					{service: 'Navegacion',
-					 subservice: 'Proxy',
-					 vmachine: 'Jango',
-					 node: 'Palpatine'	
-					},
-					{
-						service: 'Navegacion',
-						subservice: 'DNS',
-						vmachine: 'Jango',
-						node: 'Palpatine'
-					},
+					// {service: 'Navegacion',
+					//  subservice: 'Proxy',
+					//  vmachine: 'Jango',
+					//  node: 'Palpatine'	
+					// },
+					// {
+					// 	service: 'Navegacion',
+					// 	subservice: 'DNS',
+					// 	vmachine: 'Jango',
+					// 	node: 'Palpatine'
+					// },
 				],
 				serv_existentes: [
-					{
-					name: 'Zabbix',
-					type: 'inutil',
-					class: 'Soporte',
-					structure: 'Single Tier',
-					criticity:'Baja',
-					int:'0',
-					comments:'No le importa a nadie',
-					},
-					{
-					name: 'Navegacion',
-					type: 'Squid',
-					class: 'Soporte',
-					structure: 'Multi Tier',
-					criticity: 'Alta',
-					int:'2',
-					comments: 'Sin esto la gente se suicida',
-					},
-					{
-					name: 'Navegacion',
-					type: 'DNS',
-					class: 'Soporte',
-					structure: 'Multi Tier',
-					criticity: 'Media',
-					int:'1',
-					comments: 'Sin esto la gente no puede ir a facebook',
-					},
+					// {
+					// name: 'Zabbix',
+					// type: 'inutil',
+					// class: 'Soporte',
+					// structure: 'Single Tier',
+					// criticity:'Baja',
+					// int:'0',
+					// comments:'No le importa a nadie',
+					// },
+					// {
+					// name: 'Navegacion',
+					// type: 'Squid',
+					// class: 'Soporte',
+					// structure: 'Multi Tier',
+					// criticity: 'Alta',
+					// int:'2',
+					// comments: 'Sin esto la gente se suicida',
+					// },
+					// {
+					// name: 'Navegacion',
+					// type: 'DNS',
+					// class: 'Soporte',
+					// structure: 'Multi Tier',
+					// criticity: 'Media',
+					// int:'1',
+					// comments: 'Sin esto la gente no puede ir a facebook',
+					// },
 				],
 
 				serv_nuevos: [
-					{
-					name: 'Zabbix1',
-					type: 'inutil',
-					class: 'Soporte',
-					structure: 'Single Tier',
-					criticity: 'Baja',
-					int: '0',
-					comments: 'No le importa a nadie',
-					},
-					{
-					name: 'Navegacion',
-					type: 'Squid',
-					class: 'Soporte',
-					structure: 'Multi Tier',
-					criticity: 'Alta',
-					int: '2',
-					comments: 'Sin esto la gente se suicida',
-					},
-					{
-					name: 'Navegacion',
-					type: 'DNS',
-					class: 'Soporte',
-					structure: 'Multi Tier',
-					criticity: 'Media',
-					int: '1',
-					comments: 'Sin esto la gente no puede ir a facebook',
-					},
+					// {
+					// name: 'Zabbix1',
+					// type: 'inutil',
+					// class: 'Soporte',
+					// structure: 'Single Tier',
+					// criticity: 'Baja',
+					// int: '0',
+					// comments: 'No le importa a nadie',
+					// },
+					// {
+					// name: 'Navegacion',
+					// type: 'Squid',
+					// class: 'Soporte',
+					// structure: 'Multi Tier',
+					// criticity: 'Alta',
+					// int: '2',
+					// comments: 'Sin esto la gente se suicida',
+					// },
+					// {
+					// name: 'Navegacion',
+					// type: 'DNS',
+					// class: 'Soporte',
+					// structure: 'Multi Tier',
+					// criticity: 'Media',
+					// int: '1',
+					// comments: 'Sin esto la gente no puede ir a facebook',
+					// },
 				],
 				serv_futuros: [
-					{
-					name: 'Zabbix2',
-					type: 'inutil',
-					class: 'Soporte',
-					structure: 'Single Tier',
-					criticity: 'Baja',
-					int: '0',
-					comments: 'No le importa a nadie',
-					},
-					{
-					name: 'Navegacion',
-					type: 'Squid',
-					class: 'Soporte',
-					structure: 'Multi Tier',
-					criticity: 'Alta',
-					int: '2',
-					comments: 'Sin esto la gente se suicida',
-					},
-					{
-					name: 'Navegacion',
-					type: 'DNS',
-					class: 'Soporte',
-					structure: 'Multi Tier',
-					criticity: 'Media',
-					int: '1',
-					comments: 'Sin esto la gente no puede ir a facebook',
-					},
+					// {
+					// name: 'Zabbix2',
+					// type: 'inutil',
+					// class: 'Soporte',
+					// structure: 'Single Tier',
+					// criticity: 'Baja',
+					// int: '0',
+					// comments: 'No le importa a nadie',
+					// },
+					// {
+					// name: 'Navegacion',
+					// type: 'Squid',
+					// class: 'Soporte',
+					// structure: 'Multi Tier',
+					// criticity: 'Alta',
+					// int: '2',
+					// comments: 'Sin esto la gente se suicida',
+					// },
+					// {
+					// name: 'Navegacion',
+					// type: 'DNS',
+					// class: 'Soporte',
+					// structure: 'Multi Tier',
+					// criticity: 'Media',
+					// int: '1',
+					// comments: 'Sin esto la gente no puede ir a facebook',
+					// },
 				],
 
 
@@ -392,15 +426,15 @@
 					console.log(app.new_srv)
 					console.log(dict)
 					switch (service){
-						case 'existente':
+						case 'existentes':
 							app.serv_existentes.push(dict);
 							break;
 						
-						case 'nuevo':
+						case 'nuevos':
 							app.serv_nuevos.push(dict);
 							break;
 						
-						case 'futuro':
+						case 'futuros':
 							app.serv_futuros.push(dict);
 							break;
 							

@@ -5,5 +5,11 @@ def step_1(users_dic):
 	json.dump(users_dic,f)
 	f.close()
 
-dic={'current_users': 34, 'new_users': 55, 'future_users': 79}
-step_1(dic)
+def step_1_load():
+	f=open('step_1.json')
+	values = json.load(f)
+	return values
+	f.close()
+
+# dic={'current_users': 34, 'new_users': 55, 'future_users': 79}
+# step_1(dic)

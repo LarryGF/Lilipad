@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-	<title>LiliPad</title>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="node_modules/vue-material/dist/vue-material.css">
-	<link rel="stylesheet" href="node_modules/vue-material/dist/theme/default.css">
-</head>
-
-<body>
-	<div id='app'>
-		<script type='text/javascript' src='/eel.js'></script>
-		<script type='text/javascript'>
-
+	
+	<head>
+		<title>LiliPad</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="node_modules/vue-material/dist/vue-material.css">
+		<link rel="stylesheet" href="node_modules/vue-material/dist/theme/default.css">
+	</head>
+	
+	<body>
+		<div id='app'>
+			<script type='text/javascript' src='/eel.js'></script>
+			<script type='text/javascript'>
+				load_table(1)
+			async function load_table(table){
+				if (table == 1){
+					let value = await eel.load(1,'','')();
+					app.actuales = value['usract'];
+					app.nuevos = value['usrnew'];
+					app.futuros = value['usrfutr']
+				}
+			}
 
 		</script>
 
@@ -117,19 +125,19 @@
 			</md-tab>
 
 			<md-tab id="paso3" md-label="Paso 3" >
-				<div v-if='!selected'>
+				<div v-if='!selection'>
 					<h2>Seleccione una o ambas opciones</h2>
 				<div>
 					<md-checkbox v-model="iaas" class="md-primary">IaaS</md-checkbox>
 					<md-checkbox v-model="dsaas" class="md-primary">DaaS</md-checkbox>
 				</div>
 
-				<md-button class="md-raised md-primary" @click="selected=true">Aceptar</md-button>
+				<md-button class="md-raised md-primary" @click="selection=true">Aceptar</md-button>
 
 				</div>
 
-				<div v-if='selected & iaas'>Aqui va la tabla IaaS</div>
-				<div v-if='selected & dsaas'>Aqui va la tabla DSaaS</div>
+				<div v-if='selection & iaas'>Aqui va la tabla IaaS</div>
+				<div v-if='selection & dsaas'>Aqui va la tabla DSaaS</div>
 			</md-tab>
 
 			<md-tab id="paso4" md-label="Paso 4" >
@@ -233,7 +241,8 @@
 		const app = new Vue({
 			el: "#app",
 			data: {
-				selected:false,
+				selection:false,
+				selected:[],
 				iaas:false,
 				dsaas:false,
 				new_srv:'',
@@ -252,6 +261,7 @@
 				tab_subservice:'',
 				tab_vm:'',
 				tab_node:'',
+
 				tabla_servicios:[
 					{service: 'Navegacion',
 					 subservice: 'Proxy',
@@ -361,12 +371,17 @@
 			},
 			methods: {
 				send(paso,dict){
-					console.log(paso)
-					console.log(dict)
-					if (paso == 1){
-					paso = paso +1
-					app.step = "paso"+paso
-					console.log(app.step)}
+					// console.log(paso)
+					// console.log(app.new_srv)
+					// console.log(dict)
+					
+					let result = eel.handler(paso,app.new_srv,dict)()
+					console.log(result)
+					if (paso == 1) {
+						paso = paso + 1
+						app.step = "paso" + paso
+						console.log(app.step)
+					}
 				},
 				change(serv){
 					app.add_srv=true

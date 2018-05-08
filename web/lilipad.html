@@ -158,20 +158,67 @@
 				</div>
 			</md-tab>
 
-			<md-tab id="paso3" md-label="Paso 3" >
-				<div v-if='!selection'>
-					<h2>Seleccione una o ambas opciones</h2>
+			<md-tab id="paso3" md-label="Paso 3" @click='slection=true'>
+				<div >
+					<md-table @md-selected="onSelect" v-model="tabla_iaas" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Recursos asignados IaaS</h1>
+							<md-button class="md-raised md-primary" @click="send(3,tabla_iaas)">Guardar</md-button>
+							<md-button class="md-raised md-primary" @click="change('iaas')">Nuevo</md-button>
+						</md-table-toolbar>
+				
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Subentidad" md-sort-by="subentity" md-numeric>{{ item.subentity }}</md-table-cell>
+							<md-table-cell md-label="CPU [%]" md-sort-by="cpu">{{item.cpu}}</md-table-cell>
+							<md-table-cell md-label="RAM [MB]" md-sort-by="ram">{{item.ram}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'  md-label="Capacidad [GB]" md-sort-by="capacity">{{item.capacity}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'md-label="Throughput [Mbps]"md-sort-by="throughput">{{item.throughput}}</md-table-cell>
+							<md-table-cell style='background-color:silver' md-label="Tx [Mbps]" md-sort-by="transmission">{{item.transmission}}</md-table-cell>
+							<md-table-cell style='background-color:silver' md-label="Rx [Mbps]" md-sort-by="reception">{{item.reception}}</md-table-cell>
+							<md-table-cell style='background-color:red'md-label="Nucleos [%]" md-sort-by="gpucore">{{item.gpucore}}</md-table-cell>
+							<md-table-cell style='background-color:red'md-label="Memoria [MB]" md-sort-by="gpumem">{{item.gpumem}}</md-table-cell>
+						
+						</md-table-row>
+						<h3> Codigo de colores:
+							<span style='color:slategrey'><br> --Almacenamiento </span>
+							<span style='color:silver'> <br> --Red </span>
+							<span style='color:red'><br> --GPU </span>
+						</h3>
+						
+					</md-table>
+				</div>
 				<div>
-					<md-checkbox v-model="iaas" class="md-primary">IaaS</md-checkbox>
-					<md-checkbox v-model="dsaas" class="md-primary">DaaS</md-checkbox>
+					<md-table @md-selected="onSelect" v-model="tabla_dsaas" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Recursos asignados a DSaaS</h1>
+							<md-button class="md-raised md-primary" @click="send(3,tabla_dsaas)">Guardar</md-button>
+							<md-button class="md-raised md-primary" @click="change('dsaas')">Nuevo</md-button>
+						</md-table-toolbar>
+				
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Subentidad" md-sort-by="subentity" md-numeric>{{ item.subentity }}</md-table-cell>
+							<md-table-cell md-label="CPU [%]" md-sort-by="cpu">{{item.cpu}}</md-table-cell>
+							<md-table-cell md-label="RAM [MB]" md-sort-by="ram">{{item.ram}}</md-table-cell>
+							<md-table-cell style='background-color:slategrey' md-label="Capacidad [GB]" md-sort-by="capacity">{{item.capacity}}</md-table-cell>
+							<md-table-cell style='background-color:slategrey' md-label="Throughput [Mbps]" md-sort-by="throughput">{{item.throughput}}</md-table-cell>
+							<md-table-cell style='background-color:silver' md-label="Tx [Mbps]" md-sort-by="transmission">{{item.transmission}}</md-table-cell>
+							<md-table-cell style='background-color:silver' md-label="Rx [Mbps]" md-sort-by="reception">{{item.reception}}</md-table-cell>
+							<md-table-cell style='background-color:red' md-label="Nucleos [%]" md-sort-by="gpucore">{{item.gpucore}}</md-table-cell>
+							<md-table-cell style='background-color:red' md-label="Memoria [MB]" md-sort-by="gpumem">{{item.gpumem}}</md-table-cell>
+				
+						</md-table-row>
+						<h3> Codigo de colores:
+							<span style='color:slategrey'>
+								<br> -Almacenamiento </span>
+							<span style='color:silver'>
+								<br> -Red </span>
+							<span style='color:red'>
+								<br> -GPU </span>
+						</h3>
+				
+					</md-table>
 				</div>
-
-				<md-button class="md-raised md-primary" @click="selection=true">Aceptar</md-button>
-
-				</div>
-
-				<div v-if='selection & iaas'>Aqui va la tabla IaaS</div>
-				<div v-if='selection & dsaas'>Aqui va la tabla DSaaS</div>
+				<div v-if='!selection & dsaas'>Aqui va la tabla DSaaS</div>
 			</md-tab>
 
 			<md-tab id="paso4" md-label="Paso 4" >
@@ -187,6 +234,7 @@
 		<script src="node_modules/vue/dist/vue.min.js"></script>
 		<script src="node_modules/vue-material/dist/vue-material.js"></script>
 
+		
 		<md-dialog :md-active.sync="add_srv" :md-click-outside-to-close="false">
 			<div v-if="new_srv != 'tab_serv'">
 			<md-tabs md-dynamic-height class="md-primary">
@@ -297,109 +345,32 @@
 				tab_node:'',
 
 				tabla_servicios:[
-					// {service: 'Navegacion',
-					//  subservice: 'Proxy',
-					//  vmachine: 'Jango',
-					//  node: 'Palpatine'	
-					// },
-					// {
-					// 	service: 'Navegacion',
-					// 	subservice: 'DNS',
-					// 	vmachine: 'Jango',
-					// 	node: 'Palpatine'
-					// },
+					
 				],
 				serv_existentes: [
-					// {
-					// name: 'Zabbix',
-					// type: 'inutil',
-					// class: 'Soporte',
-					// structure: 'Single Tier',
-					// criticity:'Baja',
-					// int:'0',
-					// comments:'No le importa a nadie',
-					// },
-					// {
-					// name: 'Navegacion',
-					// type: 'Squid',
-					// class: 'Soporte',
-					// structure: 'Multi Tier',
-					// criticity: 'Alta',
-					// int:'2',
-					// comments: 'Sin esto la gente se suicida',
-					// },
-					// {
-					// name: 'Navegacion',
-					// type: 'DNS',
-					// class: 'Soporte',
-					// structure: 'Multi Tier',
-					// criticity: 'Media',
-					// int:'1',
-					// comments: 'Sin esto la gente no puede ir a facebook',
-					// },
+					
 				],
 
 				serv_nuevos: [
-					// {
-					// name: 'Zabbix1',
-					// type: 'inutil',
-					// class: 'Soporte',
-					// structure: 'Single Tier',
-					// criticity: 'Baja',
-					// int: '0',
-					// comments: 'No le importa a nadie',
-					// },
-					// {
-					// name: 'Navegacion',
-					// type: 'Squid',
-					// class: 'Soporte',
-					// structure: 'Multi Tier',
-					// criticity: 'Alta',
-					// int: '2',
-					// comments: 'Sin esto la gente se suicida',
-					// },
-					// {
-					// name: 'Navegacion',
-					// type: 'DNS',
-					// class: 'Soporte',
-					// structure: 'Multi Tier',
-					// criticity: 'Media',
-					// int: '1',
-					// comments: 'Sin esto la gente no puede ir a facebook',
-					// },
+					
 				],
 				serv_futuros: [
-					// {
-					// name: 'Zabbix2',
-					// type: 'inutil',
-					// class: 'Soporte',
-					// structure: 'Single Tier',
-					// criticity: 'Baja',
-					// int: '0',
-					// comments: 'No le importa a nadie',
-					// },
-					// {
-					// name: 'Navegacion',
-					// type: 'Squid',
-					// class: 'Soporte',
-					// structure: 'Multi Tier',
-					// criticity: 'Alta',
-					// int: '2',
-					// comments: 'Sin esto la gente se suicida',
-					// },
-					// {
-					// name: 'Navegacion',
-					// type: 'DNS',
-					// class: 'Soporte',
-					// structure: 'Multi Tier',
-					// criticity: 'Media',
-					// int: '1',
-					// comments: 'Sin esto la gente no puede ir a facebook',
-					// },
+					
+				],
+				tabla_dsaas: [
+
+				],
+				tabla_iaas: [
+					{'subentity':'Ni idea','cpu':'55','ram':'4','capacity':'500','throughput':'50','transmission':'30','reception':'34','gpucore':'34','gpumem':'4'},
+					{ 'subentity': 'Ni idea', 'cpu': '55', 'ram': '4', 'capacity': '500', 'throughput': '50', 'transmission': '30', 'reception': '34', 'gpucore': '34', 'gpumem': '4' },
+					{ 'subentity': 'Ni idea', 'cpu': '55', 'ram': '4', 'capacity': '500', 'throughput': '50', 'transmission': '30', 'reception': '34', 'gpucore': '34', 'gpumem': '4' },
+					{ 'subentity': 'Ni idea', 'cpu': '55', 'ram': '4', 'capacity': '500', 'throughput': '50', 'transmission': '30', 'reception': '34', 'gpucore': '34', 'gpumem': '4' },
+					{ 'subentity': 'Ni idea', 'cpu': '55', 'ram': '4', 'capacity': '500', 'throughput': '50', 'transmission': '30', 'reception': '34', 'gpucore': '34', 'gpumem': '4' }
+
 				],
 
-
 			},
+
 			computed: {
 
 			},

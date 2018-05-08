@@ -28,4 +28,4 @@ def load(step,table_list):
         values = step2_load(table_list)
         return values
         
-eel.start('lili.html')
+eel.start('lilipad.html')

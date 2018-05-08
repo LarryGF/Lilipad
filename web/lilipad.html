@@ -48,10 +48,10 @@
 						</md-table-toolbar>
 				
 						<md-table-row slot="md-table-row" slot-scope="{ item }">
-							<md-table-cell md-label="Servicio" md-sort-by="name" md-numeric>{{ item.service }}</md-table-cell>
-							<md-table-cell md-label="Subservicio" md-sort-by="type">{{ item.subservice }}</md-table-cell>
-							<md-table-cell md-label="Maquina Virtual" md-sort-by="class">{{ item.vmachine }}</md-table-cell>
-							<md-table-cell md-label="Nodo" md-sort-by="structure">{{ item.node }}</md-table-cell>
+							<md-table-cell md-label="Servicio" md-sort-by="service" md-numeric>{{ item.service }}</md-table-cell>
+							<md-table-cell md-label="Subservicio" md-sort-by="subservice">{{ item.subservice }}</md-table-cell>
+							<md-table-cell md-label="Maquina Virtual" md-sort-by="vmachine">{{ item.vmachine }}</md-table-cell>
+							<md-table-cell md-label="Nodo" md-sort-by="node">{{ item.node }}</md-table-cell>
 						</md-table-row>
 					</md-table>
 				</div>
@@ -173,9 +173,9 @@
 
 					<select v-model="srv_criticity" >
 						<option disabled value="">Criticidad</option>
-						<option  value="0Baja">Baja</option>
-						<option  value="1Media">Media</option>
-						<option  value="2Alta">Alta</option>
+						<option  value="Baja">Baja</option>
+						<option  value="Media">Media</option>
+						<option  value="Alta">Alta</option>
 					</select>
 
 					<md-field>

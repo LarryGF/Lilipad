@@ -19,37 +19,35 @@
 
        
 <div>
-    <md-checkbox v-model="array" value="1">Array</md-checkbox>
-    <md-checkbox v-model="array" value="2">Array</md-checkbox>
-    <md-checkbox v-model="boolean">Boolean</md-checkbox>
-    <md-checkbox v-model="string" value="my-checkbox">String</md-checkbox>
-    <md-checkbox v-model="novalue">No Value</md-checkbox>
-    <md-checkbox v-model="disabled" disabled>Disabled</md-checkbox>
-    <md-checkbox v-model="obj" :value="obj1">Object 1</md-checkbox>
-    <md-checkbox v-model="obj" :value="obj2">Object 2</md-checkbox>
+    <md-table v-model="people" md-card @md-selected="onSelect">
+        <md-table-toolbar>
+            <h1 class="md-title">With auto select and alternate headers</h1>
+        </md-table-toolbar>
 
-    <md-checkbox v-model="indeterminate" indeterminate>Indeterminate</md-checkbox>
+        <md-table-toolbar slot="md-table-alternate-header" slot-scope="{ count }">
+            <div class="md-toolbar-section-start">{{ getAlternateLabel(count) }}</div>
 
-    <table>
-        <tr>
-            <th>Array</th>
-            <th>Boolean</th>
-            <th>String</th>
-            <th>No Value</th>
-            <th>Object</th>
-        </tr>
+            <div class="md-toolbar-section-end">
+                <md-button class="md-icon-button">
+                    <md-icon>delete</md-icon>
+                </md-button>
+            </div>
+        </md-table-toolbar>
 
-        <tr>
-            <td>{{ array }}</td>
-            <td>{{ boolean }}</td>
-            <td>{{ string }}</td>
-            <td>{{ novalue }}</td>
-            <td>{{ obj }}</td>
-        </tr>
-    </table>
+        <md-table-row slot="md-table-row" slot-scope="{ item }" :md-disabled="item.name.includes('Stave')" md-selectable="multiple"
+            md-auto-select>
+            <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
+            <md-table-cell md-label="Email" md-sort-by="email">{{ item.email }}</md-table-cell>
+            <md-table-cell md-label="Gender" md-sort-by="gender">{{ item.gender }}</md-table-cell>
+            <md-table-cell md-label="Job Title" md-sort-by="title">{{ item.title }}</md-table-cell>
+        </md-table-row>
+    </md-table>
+
+    <p>Selected:</p>
+    {{ selected }}
 </div>
 
-            <script src="node_modules/vue/dist/vue.min.js"></script>
+<script src="node_modules/vue/dist/vue.min.js"></script>
             <script src="node_modules/vue-material/dist/vue-material.js"></script>
 
             <script>
@@ -62,44 +60,38 @@
                         actuales: '',
                         nuevos: '',
                         futuros: '',
-                              users: [
+                             selected: [],
+                        people: [
                             {
-                                id: 1,
                                 name: 'Shawna Dubbin',
                                 email: 'sdubbin0@geocities.com',
                                 gender: 'Male',
                                 title: 'Assistant Media Planner'
                             },
                             {
-                                id: 2,
                                 name: 'Odette Demageard',
                                 email: 'odemageard1@spotify.com',
                                 gender: 'Female',
                                 title: 'Account Coordinator'
                             },
                             {
-                                id: 3,
                                 name: 'Lonnie Izkovitz',
                                 email: 'lizkovitz3@youtu.be',
                                 gender: 'Female',
                                 title: 'Operator'
                             },
                             {
-                                id: 4,
                                 name: 'Thatcher Stave',
                                 email: 'tstave4@reference.com',
                                 gender: 'Male',
                                 title: 'Software Test Engineer III'
                             },
                             {
-                                id: 5,
                                 name: 'Clarinda Marieton',
                                 email: 'cmarietonh@theatlantic.com',
                                 gender: 'Female',
                                 title: 'Paralegal'
-                            },
-                            
-                            
+                            }
                         ],
                               array: [],
                         boolean: false,
@@ -123,8 +115,24 @@
                             paso = paso + 1
                             app.step = "paso" + paso
 
-                        }
-                    }
+                        },
+                        onSelect (items) {
+                            // console.log(items)
+                            // var item = items
+                            console.log(items.id)
+         this.selected = items.id
+      },
+      getAlternateLabel (count) {
+        let plural = ''
+
+        if (count > 1) {
+          plural = 's'
+        }
+
+        return `${count} user${plural} selected`
+      }
+    }
+                    
                 })
             </script>
         </div>

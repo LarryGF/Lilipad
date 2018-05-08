@@ -39,9 +39,28 @@
 
 			<md-tab id="paso2" md-label="Paso 2" >
 				<div>
+					<md-table v-model="tabla_servicios" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Servicios</h1>
+							<md-button class="md-raised md-primary" @click="send(2,tabla_servicios)">Guardar</md-button>
+				
+							<md-button class="md-raised md-primary" @click="change('tab_serv')">Nuevo</md-button>
+						</md-table-toolbar>
+				
+						<md-table-row slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Servicio" md-sort-by="name" md-numeric>{{ item.service }}</md-table-cell>
+							<md-table-cell md-label="Subservicio" md-sort-by="type">{{ item.subservice }}</md-table-cell>
+							<md-table-cell md-label="Maquina Virtual" md-sort-by="class">{{ item.vmachine }}</md-table-cell>
+							<md-table-cell md-label="Nodo" md-sort-by="structure">{{ item.node }}</md-table-cell>
+						</md-table-row>
+					</md-table>
+				</div>
+				<div>
 					<md-table v-model="serv_existentes" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Servicios Existentes</h1>
+							<md-button class="md-raised md-primary" @click="send(2,serv_existentes)">Guardar</md-button>
+							
 							<md-button class="md-raised md-primary" @click="change('existente')">Nuevo</md-button>
 						</md-table-toolbar>
 
@@ -60,6 +79,7 @@
 					<md-table v-model="serv_nuevos" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Servicios Nuevos</h1> 
+							<md-button class="md-raised md-primary" @click="send(2,serv_nuevos)">Guardar</md-button>						
 							<md-button class="md-raised md-primary"  @click="change('nuevo')">Nuevo</md-button>
 						</md-table-toolbar>
 
@@ -79,6 +99,7 @@
 					<md-table v-model="serv_futuros" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Servicios Futuros</h1>
+							<md-button class="md-raised md-primary" @click="send(2,serv_futuros)">Guardar</md-button>
 							<md-button class="md-raised md-primary"  @click="change('futuro')">Nuevo</md-button>		
 						</md-table-toolbar>
 
@@ -125,9 +146,9 @@
 		<script src="node_modules/vue-material/dist/vue-material.js"></script>
 
 		<md-dialog :md-active.sync="add_srv" :md-click-outside-to-close="false">
-
+			<div></div>
 			<md-tabs md-dynamic-height class="md-primary">
-				<md-tab md-label="Crear Anuncio">
+				<md-tab md-label="Nuevo Servicio">
 					<md-field>
 						<label>Nombre</label>
 						<md-input v-model="srv_name" required></md-input>
@@ -166,12 +187,13 @@
 			</md-tabs>
 
 			<md-dialog-actions>
-				<md-button class="md-primary" @click="new_service({'name':srv_name,'type':srv_type,'class':srv_class,'structure':srv_structure,'criticity':srv_criticity,'comments':srv_comments,'int':srv_criticity[0]})">Crear</md-button>
+				<md-button class="md-primary" @click="new_service(new_srv,{'name':srv_name,'type':srv_type,'class':srv_class,'structure':srv_structure,'criticity':srv_criticity,'comments':srv_comments,'int':srv_criticity[0]})">Crear</md-button>
 			</md-dialog-actions>
 			
 			<md-dialog-actions>
 				<md-button class="md-primary" @click="add_srv=false,srv_class='',srv_comments=null,srv_criticity='',srv_name=null,srv_structure='',srv_type=null">Cerrar</md-button>
 			</md-dialog-actions>
+		</div>
 		</md-dialog>
 
 
@@ -195,6 +217,23 @@
 				srv_structure:'',
 				srv_criticity:'',
 				srv_comments:'',
+				tab_service:'',
+				tab_subservice:'',
+				tab_vm:'',
+				tab_node:'',
+				tabla_servicios:[
+					{service: 'Navegacion',
+					 subservice: 'Proxy',
+					 vmachine: 'Jango',
+					 node: 'Palpatine'	
+					},
+					{
+						service: 'Navegacion',
+						subservice: 'DNS',
+						vmachine: 'Jango',
+						node: 'Palpatine'
+					},
+				],
 				serv_existentes: [
 					{
 					name: 'Zabbix',
@@ -293,17 +332,37 @@
 				send(paso,dict){
 					console.log(paso)
 					console.log(dict)
+					if (paso == 1){
 					paso = paso +1
 					app.step = "paso"+paso
-					console.log(app.step)
+					console.log(app.step)}
 				},
 				change(serv){
 					app.add_srv=true
 					app.new_srv=serv
 				},
-				new_service(dict){
+
+				new_service(service,dict){
 					console.log(app.new_srv)
 					console.log(dict)
+					switch (service){
+						case 'existente':
+							app.serv_existentes.push(dict);
+							break;
+						
+						case 'nuevo':
+							app.serv_nuevos.push(dict);
+							break;
+						
+						case 'futuro':
+							app.serv_futuros.push(dict);
+							break;
+							
+						case 'tabla':
+							app.tabla_servicios.push(dict)
+
+					}
+					console.log(app.serv_existentes)
 					app.srv_name= '',
 					app.srv_type= '',
 					app.srv_class= '',

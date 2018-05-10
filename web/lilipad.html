@@ -218,10 +218,13 @@
 				
 					</md-table>
 				</div>
-				<div v-if='!selection & dsaas'>Aqui va la tabla DSaaS</div>
+				
 			</md-tab>
 
 			<md-tab id="paso4" md-label="Paso 4" >
+				<h3>Escoja cual de las pruebas desea realizar</h3>
+					<md-button class="md-primary" @click="step_4=true,step_4_sel='correo'">Correo</md-button>
+					<md-button class="md-primary" @click="step_4=true,step_4_sel='navegacion'">Navegacion</md-button>
 
 			</md-tab>
 
@@ -317,12 +320,74 @@
 				</md-dialog-actions>
 		</md-dialog>
 
+<md-dialog :md-active.sync="step_4" :md-click-outside-to-close="false" style="width:50%">
+	 <div v-if="step_4_sel != 'navegacion'">
+		<md-tabs md-dynamic-height class="md-primary">
+			<md-tab md-label="Correo">
+				<md-field>
+					<label>Ruta del archivo log</label>
+					<md-input v-model="ruta_mail" required></md-input>
+				</md-field>
+
+				<md-field>
+					<label>Fecha (en la forma DDMMYYYY)</label>
+					<md-input v-model="date_mail" required></md-input>
+				</md-field>
+
+				
+			</md-tab>
+		</md-tabs>
+
+		<md-dialog-actions>
+			<md-button class="md-primary" @click="tests({'servicio':'correo','ruta':ruta_mail,'fecha':date_mail})">Correo</md-button>
+		</md-dialog-actions>
+
+
+	</div> 
+	<div v-if="step_4_sel == 'navegacion'">
+		<md-tabs md-dynamic-height class="md-primary">
+			<md-tab md-label="Agregar a tabla de servicios">
+				<md-field>
+					<label>Ruta</label>
+					<md-input v-model="ruta_nav" required></md-input>
+				</md-field>
+
+				<md-field>
+					<label>Lista de usuarios (separados por coma)</label>
+					<md-input placeholder='separados por coma' v-model="usr_list" required></md-input>
+				</md-field>
+
+				<md-field>
+					<label>Fecha limite inferior (DDMMYYYY)</label>
+					<md-input v-model="date_nav_inf" required></md-input>
+				</md-field>
+
+				<md-field>
+					<label>Fecha limite superior (DDMMYYYY)</label>
+					<md-input v-model="date_nav_sup" required></md-input>
+				</md-field>
+			</md-tab>
+		</md-tabs> 
+
+		 <md-dialog-actions>
+			<md-button class="md-primary" @click="testss({'servicio':'navegacion','ruta':ruta_nav,'users_list':usr_list,'start_time':date_nav_inf,'end_time':date_nav_sup})">Navegacion</md-button>
+		</md-dialog-actions>
+
+	</div>
+	<md-dialog-actions>
+		<md-button class="md-primary" @click="step_4=false,step_4_sel='',ruta_mail='',ruta_nav='',usr_list='',date_mail='',date_nav_inf='',date_nav_sup=''">Cerrar</md-button>
+	</md-dialog-actions>
+</md-dialog>
 
 		<script>Vue.use(VueMaterial.default)
 
 		const app = new Vue({
 			el: "#app",
 			data: {
+				ruta_mail:'',
+				date_mail:'',
+				step_4:false,
+				step_4_sel:'',
 				selection:false,
 				selected:[],
 				iaas:false,
@@ -343,6 +408,10 @@
 				tab_subservice:'',
 				tab_vm:'',
 				tab_node:'',
+				ruta_nav:'',
+				usr_list:'',
+				date_nav_inf:'',
+				date_nav_sup:'',
 
 				tabla_servicios:[
 					
@@ -429,6 +498,10 @@
 				onSelect(items) {
 					this.selected = items
 				},
+
+				tests(dic) {
+					eel.tests(dic)
+				}
 
 				
 			}

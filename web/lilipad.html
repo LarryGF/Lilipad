@@ -54,6 +54,10 @@
 				}
 				// break;
 				
+			};
+
+			async function tests(dictionary) {
+				let result = await eel.tests(dictionary)();
 			}
 
 		</script>
@@ -370,7 +374,7 @@
 		</md-tabs> 
 
 		 <md-dialog-actions>
-			<md-button class="md-primary" @click="testss({'servicio':'navegacion','ruta':ruta_nav,'users_list':usr_list,'start_time':date_nav_inf,'end_time':date_nav_sup})">Navegacion</md-button>
+			<md-button class="md-primary" @click="tests({'servicio':'navegacion','ruta':ruta_nav,'users_list':usr_list,'start_time':date_nav_inf,'end_time':date_nav_sup})">Navegacion</md-button>
 		</md-dialog-actions>
 
 	</div>
@@ -499,9 +503,7 @@
 					this.selected = items
 				},
 
-				tests(dic) {
-					eel.tests(dic)
-				}
+				
 
 				
 			}

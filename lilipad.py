@@ -1,7 +1,7 @@
 import eel
 from step_1 import step_1,step_1_load
 from step2 import step2_write,step2_load
-import step_4
+from step_4 import *
 
 
 
@@ -28,8 +28,8 @@ def load(step,table_list):
         values = step2_load(table_list)
         return values
         
-eel.start('lilipad.html')
-
 @eel.expose
-def tests(dic):
-    step_4(dic)
+def tests(dictionary):
+    step_4(dictionary) 
+
+eel.start('lilipad.html')

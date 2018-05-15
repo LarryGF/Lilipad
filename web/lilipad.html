@@ -233,7 +233,146 @@
 			</md-tab>
 
 			<md-tab id="paso5" md-label="Paso 5" >
-
+				
+			</md-tab>
+			<md-tab id="paso6" md-label="Paso 6" >
+				<div >
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Utilizacion de Servicios</h1>
+						</md-table-toolbar>
+				
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Servicio" md-sort-by="service">{{ item.service }}</md-table-cell>
+							<md-table-cell md-label="Subservicio" md-sort-by="subservice">{{item.subservice}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'  md-label="Asignado (vCPU)" md-sort-by="cpu_asigned">{{item.cpu_asigned}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'  md-label="U-prom" md-sort-by="cpu_uprom">{{item.cpu_uprom}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'md-label="U-max"md-sort-by="cpu_umax">{{item.cpu_umax}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'  md-label="Asignado" md-sort-by="ram_asigned">{{item.ram_asigned}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'  md-label="U-prom" md-sort-by="ram_uprom">{{item.ram_uprom}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'md-label="U-max"md-sort-by="ram_umax">{{item.ram_umax}}</md-table-cell>
+							
+						</md-table-row>
+						<h3> Codigo de colores:
+							<span style='color:slategrey'><br> -- CPU </span>
+							<span style='color:silver'> <br> -- RAM </span>
+						</h3>
+						
+					</md-table>
+				</div>
+				<div >
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv_alm_cap" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Almacenamiento:Capacidad</h1>
+						</md-table-toolbar>
+				
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Servicio" md-sort-by="service">{{ item.service }}</md-table-cell>
+							<md-table-cell md-label="Subservicio" md-sort-by="subservice">{{item.subservice}}</md-table-cell>
+							<md-table-cell md-label="Asignado" md-sort-by="asigned">{{item.asigned}}</md-table-cell>
+							<md-table-cell md-label="Uso" md-sort-by="use">{{item.use}}</md-table-cell>
+							
+						</md-table-row>
+					</md-table>
+				</div>
+				<h1>Almacenamiento:Throughput</h1>
+				<br>
+				<div >
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv_alm_iops" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">IOPS</h1>
+						</md-table-toolbar>
+				
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Servicio" md-sort-by="service">{{ item.service }}</md-table-cell>
+							<md-table-cell md-label="Subservicio" md-sort-by="subservice">{{item.subservice}}</md-table-cell>
+							<md-table-cell md-label="Asignado" md-sort-by="asigned">{{item.asigned}}</md-table-cell>
+							<md-table-cell md-label="U-prom" md-sort-by="uprom">{{item.uprom}}</md-table-cell>
+							<md-table-cell md-label="U-max"md-sort-by="umax">{{item.umax}}</md-table-cell>
+							
+						</md-table-row>
+						
+					</md-table>
+				</div>
+				<div >
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv_alm_through" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Throughput</h1>
+						</md-table-toolbar>
+				
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Servicio" md-sort-by="subentity">{{ item.subentity }}</md-table-cell>
+							<md-table-cell md-label="Subservicio" md-sort-by="cpu">{{item.cpu}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'  md-label="Lectura" md-sort-by="uprom_r">{{item.uprom_r}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'  md-label="Escritura" md-sort-by="uprom_w">{{item.uprom_w}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'  md-label="Lectura" md-sort-by="umax_r">{{item.umax_r}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'  md-label="Escritura" md-sort-by="umax_w">{{item.umax_w}}</md-table-cell>
+							
+						</md-table-row>
+						<h3> Codigo de colores:
+							<span style='color:slategrey'><br> -- U-prom</span>
+							<span style='color:silver'> <br> -- U-max </span>
+						</h3>
+						
+					</md-table>
+				</div>
+				<div >
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv_net" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">Red</h1>
+						</md-table-toolbar>
+				
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Servicio" md-sort-by="service">{{ item.service }}</md-table-cell>
+							<md-table-cell md-label="Subservicio" md-sort-by="subservice">{{item.subservice}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'  md-label="Asignado" md-sort-by="tx_asigned">{{item.tx_asigned}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'  md-label="U-prom" md-sort-by="tx_uprom">{{item.tx_uprom}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'md-label="U-max"md-sort-by="tx_umax">{{item.tx_umax}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'  md-label="Asignado" md-sort-by="rx_asigned">{{item.rx_asigned}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'  md-label="U-prom" md-sort-by="rx_uprom">{{item.rx_uprom}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'md-label="U-max"md-sort-by="rx_umax">{{item.rx_umax}}</md-table-cell>
+							
+						</md-table-row>
+						<h3> Codigo de colores:
+							<span style='color:slategrey'><br> -- TX </span>
+							<span style='color:silver'> <br> -- RX </span>
+						</h3>
+						
+					</md-table>
+				</div>
+				<div >
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv_gpu" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+						<md-table-toolbar>
+							<h1 class="md-title">GPU</h1>
+						</md-table-toolbar>
+				
+						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Servicio" md-sort-by="service">{{ item.service }}</md-table-cell>
+							<md-table-cell md-label="Subservicio" md-sort-by="subservice">{{item.subservice}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'  md-label="Asignado" md-sort-by="gpu_core_asigned">{{item.gpu_core_asigned}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'  md-label="U-prom" md-sort-by="gpu_core_uprom">{{item.gpu_core_uprom}}</md-table-cell>
+							<md-table-cell  style='background-color:slategrey'md-label="U-max"md-sort-by="gpu_core_umax">{{item.gpu_core_umax}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'  md-label="Asignado" md-sort-by="gpu_ram_asigned">{{item.gpu_ram_asigned}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'  md-label="U-prom" md-sort-by="gpu_ram_uprom">{{item.gpu_ram_uprom}}</md-table-cell>
+							<md-table-cell  style='background-color:silver'md-label="U-max"md-sort-by="gpu_ram_umax">{{item.gpu_ram_umax}}</md-table-cell>
+							
+						</md-table-row>
+						<h3> Codigo de colores:
+							<span style='color:slategrey'><br> -- Nucleos </span>
+							<span style='color:silver'> <br> -- Memoria </span>
+						</h3>
+						
+					</md-table>
+				</div>
+			</md-tab>
+			<md-tab id="paso7" md-label="Paso 7" >
+				
+			</md-tab>
+			<md-tab id="paso8" md-label="Paso 8" >
+				
+			</md-tab>
+			<md-tab id="paso9" md-label="Paso 9" >
+				
 			</md-tab>
 
 		</md-tabs>

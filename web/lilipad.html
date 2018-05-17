@@ -233,7 +233,36 @@
 			</md-tab>
 
 			<md-tab id="paso5" md-label="Paso 5" >
-				
+				<md-field>
+					<label>Nombre del Servicio</label>
+					<md-input v-model="step5_srvname" required></md-input>
+				</md-field>
+
+				<md-field>
+					<label>Usuario de la base de datos</label>
+					<md-input v-model="step5_usr" required></md-input>
+				</md-field>
+
+				<md-field>
+					<label>Password de la base de datos</label>
+					<md-input v-model="step5_pass" required></md-input>
+				</md-field>
+				<md-field>
+					<label>Hostname (IP) de la base de datos</label>
+					<md-input v-model="step5_ip" required></md-input>
+				</md-field>
+
+				<md-field>
+						<label>Fecha inicial</label>
+						<md-input v-model="step5_start" required></md-input>
+					</md-field>
+
+				<md-field>
+						<label>Fecha final</label>
+						<md-input v-model="step5_end" required></md-input>
+					</md-field>
+
+				<md-button class="md-primary" @click="send(5,{'service':step5_srvname,'user':step5_usr,'password':step5_pass,'ip':step5_ip,'start_time':step5_start,'end_time':step5_end})">Enviar</md-button>
 			</md-tab>
 			<md-tab id="paso6" md-label="Paso 6" >
 				<div >
@@ -551,17 +580,23 @@
 				tab_subservice:'',
 				tab_vm:'',
 				tab_node:'',
-
 				ruta_nav:'',
 				usr_list:'',
 				date_nav_inf:'',
 				date_nav_sup:'',
+				step5_srvname:'',
+				step5_usr:'',
+				step5_pass:'',
+				step5_ip:'',
+				step5_start:'',
+				step5_end:'',
 				tab_ut_serv:[{'service':'loren','subservice':'loren','cpu_asigned':'loren','cpu_uprom':'loren','cpu_umax':'loren','ram_asigned':'loren','ram_uprom':'loren','ram_umax':'loren'},{'service':'loren','subservice':'loren','cpu_asigned':'loren','cpu_uprom':'loren','cpu_umax':'loren','ram_asigned':'loren','ram_uprom':'loren','ram_umax':'loren'}],
 				tab_ut_serv_alm_cap:[{'service':'loren','subservice':'loren','asigned':'loren','use':'loren'},{'service':'loren','subservice':'loren','asigned':'loren','use':'loren'}],
 				tab_ut_serv_alm_iops:[{'service':'loren','subservice':'loren','asigned':'loren','uprom':'loren','umax':'loren'},{'service':'loren','subservice':'loren','asigned':'loren','uprom':'loren','umax':'loren'}],
 				tab_ut_serv_alm_through:[{'subentity':'loren','cpu':'loren','uprom_r':'loren','uprom_w':'loren','umax_r':'loren','umax_w':'loren'},{'subentity':'loren','cpu':'loren','uprom_r':'loren','uprom_w':'loren','umax_r':'loren','umax_w':'loren'}],
 				tab_ut_serv_net:[{'service':'loren','subservice':'loren','tx_asigned':'loren','tx_uprom':'loren','tx_umax':'loren','rx_asigned':'loren','rx_uprom':'loren','rx_umax':'loren'},{'service':'loren','subservice':'loren','tx_asigned':'loren','tx_uprom':'loren','tx_umax':'loren','rx_asigned':'loren','rx_uprom':'loren','rx_umax':'loren'}],
 				tab_ut_serv_gpu:[{'service':'loren','subservice':'loren','gpu_core_asigned':'loren','gpu_core_uprom':'loren','gpu_core_umax':'loren','gpu_ram_asigned':'loren','gpu_ram_uprom':'loren','gpu_ram_umax':'loren'},{'service':'loren','subservice':'loren','gpu_core_asigned':'loren','gpu_core_uprom':'loren','gpu_core_umax':'loren','gpu_ram_asigned':'loren','gpu_ram_uprom':'loren','gpu_ram_umax':'loren'}],
+
 
 				tabla_servicios:[
 					

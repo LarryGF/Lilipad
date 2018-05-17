@@ -4,7 +4,7 @@ import re,subprocess
 def onevm(vm_name):
 	dic = {}
 	with subprocess.Popen(['sshpass','-p','opennebula_manager*','ssh','root@10.8.9.189','onevm','show',vm_name,'--all'],stdout = subprocess.PIPE) as p:
-		print('dasdasd')
+		# print('Opennebula')
 		output = p.stdout.read().decode()
 		# print(output)
 	patt1 = re.compile('VCPU="(.+)"')
@@ -16,7 +16,5 @@ def onevm(vm_name):
 	# print(VCPU.group(1))
 	# print(MEMORY.group(1))
 	# print(SIZE.group(2))
-	dic={'asignacion vCPU': float(VCPU.group(1)),'asignacion RAM':float(MEMORY.group(1)),'asignacion disco':float(SIZE.group(2)),'asignacion IOPS':'no limitado','asignacion throughput':'no limitado','asignacion red TX':'no limitado','asignacion red RX':'no limitado'}
+	dic={'CPU Usage': float(VCPU.group(1)),'RAM-used':float(MEMORY.group(1)),'Used disk space on /':float(SIZE.group(2)),'iostat.sda':'no limitado','read.sda':'no limitado','write.sda':'no limitado','Outgoing network traffic on eth0':'no limitado','Incoming network traffic on eth0':'no limitado'}
 	return dic
-dic = onevm('SQUID01')
-print(dic)

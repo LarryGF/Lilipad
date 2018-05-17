@@ -1,4 +1,3 @@
-import click
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -24,12 +23,11 @@ def db_connect(user, password, dbaddr):
         hosts = Base.classes['hosts']
         items = Base.classes['items']
         trends = Base.classes['trends']
-        history = Base.classes['history']
-        print('is connected')
+        # history = Base.classes['history']
+        print('Connected to database')
 
     except Exception as e:
-        print(e)
-        print('error')
+        print('Error:',e)
         pass
 
 
@@ -81,7 +79,6 @@ def percentil(scores):
 
 
 def rank(scores, percentil_rank, value):
-
     for i, e in enumerate(percentil_rank):
         if e >= value:
             return scores[i]
@@ -94,7 +91,7 @@ def mean(numbers):
 def filter_time(timestamp1,timestamp2,itemid):
     lista =[]
     for e in itemid:
-        lista.append(session.query(trends.itemid, trends.value_min, trends.value_avg, trends.value_max, trends.clock).filter(and_(trends.itemid == e,trends.clock >= timestamp1,trends.clock <= timestamp2)).all())
+        lista.append(session.query(trends.itemid, trends.value_min, trends.value_avg, trends.value_max, trends.clock).filter(and_(trends.itemid == e,trends.clock >= timestamp1,trends.clock < timestamp2)).all())
     return lista
 ##Funcion get_trends la podemos votar no nos sirve solo nos interesa filtrar
 

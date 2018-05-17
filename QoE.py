@@ -12,16 +12,17 @@ bienvenida='''Este documento contiene información recogida sobre el
 experimento QoE/QoS llevada a cabo en la fecha %s.\n\n'''%time.strftime('%d-%m-%Y')
 
 def main(root,users,start_time,end_time):
+    users_list = users.split(',')
     for i in range(len(users)):
         throughput_list.append([])
         delay_list.append([])
         errors.append({})
-    date = start_time#'201803290800'
-    datetuple = (int(date[0:4]), int(date[4:6]), int(date[6:8]), int(date[8:10]), int(date[10:12]), 0, 0, 0, 0)
-    timestamp1 = int(time.mktime(datetuple))
-    date = end_time#'201803291200'
-    datetuple = (int(date[0:4]), int(date[4:6]), int(date[6:8]), int(date[8:10]), int(date[10:12]), 0, 0, 0, 0)
-    timestamp2 = int(time.mktime(datetuple))
+##    date = start_time#'201803290800'
+##    datetuple = (int(date[0:4]), int(date[4:6]), int(date[6:8]), int(date[8:10]), int(date[10:12]), 0, 0, 0, 0)
+    timestamp1 = start_time#int(time.mktime(datetuple))
+##    date = end_time#'201803291200'
+##    datetuple = (int(date[0:4]), int(date[4:6]), int(date[6:8]), int(date[8:10]), int(date[10:12]), 0, 0, 0, 0)
+    timestamp2 = end_time#int(time.mktime(datetuple))
     file=open(root,'r')
     #Separar linea por elementos
     for line in file:
@@ -43,8 +44,8 @@ def main(root,users,start_time,end_time):
                     throughput_list[index].append(throughput)
                     delay = float(value_list[1])/1000
                     delay_list[index].append(delay)
-                    if int(value_list[1])>60000:
-                        print(value_list)
+##                    if int(value_list[1])>60000:
+##                        print(value_list)
                 else:
                     create_err_dict(value_list[3],index)
     make_file(users)
@@ -55,7 +56,7 @@ def make_file(users):
     '''Método para estructurar el
        archivo del informe'''
     global first
-    data=open('data.txt','a')
+    data=open('data.txt','w')
     for i in users:
         indice=users.index(i)
         avg_throu=prom(throughput_list[indice])

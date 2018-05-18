@@ -289,7 +289,7 @@
 					</md-table>
 				</div>
 				<div >
-					<md-table @md-selected="onSelect" v-model="tab_ut_serv_alm_cap" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Almacenamiento:Capacidad</h1>
 						</md-table-toolbar>
@@ -306,7 +306,7 @@
 				<h1>Almacenamiento:Throughput</h1>
 				<br>
 				<div >
-					<md-table @md-selected="onSelect" v-model="tab_ut_serv_alm_iops" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">IOPS</h1>
 						</md-table-toolbar>
@@ -314,21 +314,23 @@
 						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
 							<md-table-cell md-label="Servicio" md-sort-by="service">{{ item.service }}</md-table-cell>
 							<md-table-cell md-label="Subservicio" md-sort-by="subservice">{{item.subservice}}</md-table-cell>
-							<md-table-cell md-label="Asignado" md-sort-by="asigned">{{item.asigned}}</md-table-cell>
-							<md-table-cell md-label="U-prom" md-sort-by="uprom">{{item.uprom}}</md-table-cell>
-							<md-table-cell md-label="U-max"md-sort-by="umax">{{item.umax}}</md-table-cell>
+							<md-table-cell md-label="Asignado" md-sort-by="asigned">{{item.thru_asigned}}</md-table-cell>
+							<md-table-cell md-label="U-prom" md-sort-by="uprom">{{item.thru_uprom}}</md-table-cell>
+							<md-table-cell md-label="U-max"md-sort-by="umax">{{item.thru_umax}}</md-table-cell>
 							
 						</md-table-row>
 						
 					</md-table>
 				</div>
 				<div >
-					<md-table @md-selected="onSelect" v-model="tab_ut_serv_alm_through" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Throughput</h1>
 						</md-table-toolbar>
 				
 						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
+							<md-table-cell md-label="Servicio" md-sort-by="service">{{ item.service }}</md-table-cell>
+							<md-table-cell md-label="Subservicio" md-sort-by="subservice">{{item.subservice}}</md-table-cell>
 							<md-table-cell md-label="Servicio" md-sort-by="subentity">{{ item.subentity }}</md-table-cell>
 							<md-table-cell md-label="Subservicio" md-sort-by="cpu">{{item.cpu}}</md-table-cell>
 							<md-table-cell  style='background-color:slategrey'  md-label="Lectura" md-sort-by="uprom_r">{{item.uprom_r}}</md-table-cell>
@@ -345,7 +347,7 @@
 					</md-table>
 				</div>
 				<div >
-					<md-table @md-selected="onSelect" v-model="tab_ut_serv_net" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Red</h1>
 						</md-table-toolbar>
@@ -369,7 +371,7 @@
 					</md-table>
 				</div>
 				<div >
-					<md-table @md-selected="onSelect" v-model="tab_ut_serv_gpu" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+					<md-table @md-selected="onSelect" v-model="tab_ut_serv" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">GPU</h1>
 						</md-table-toolbar>
@@ -688,12 +690,8 @@
 				step5_ip:'',
 				step5_start:'',
 				step5_end:'',
-				tab_ut_serv:[{'service':'loren','subservice':'loren','cpu_asigned':'loren','cpu_uprom':'loren','cpu_umax':'loren','ram_asigned':'loren','ram_uprom':'loren','ram_umax':'loren'},{'service':'loren','subservice':'loren','cpu_asigned':'loren','cpu_uprom':'loren','cpu_umax':'loren','ram_asigned':'loren','ram_uprom':'loren','ram_umax':'loren'}],
-				tab_ut_serv_alm_cap:[{'service':'loren','subservice':'loren','asigned':'loren','use':'loren'},{'service':'loren','subservice':'loren','asigned':'loren','use':'loren'}],
-				tab_ut_serv_alm_iops:[{'service':'loren','subservice':'loren','asigned':'loren','uprom':'loren','umax':'loren'},{'service':'loren','subservice':'loren','asigned':'loren','uprom':'loren','umax':'loren'}],
-				tab_ut_serv_alm_through:[{'subentity':'loren','cpu':'loren','uprom_r':'loren','uprom_w':'loren','umax_r':'loren','umax_w':'loren'},{'subentity':'loren','cpu':'loren','uprom_r':'loren','uprom_w':'loren','umax_r':'loren','umax_w':'loren'}],
-				tab_ut_serv_net:[{'service':'loren','subservice':'loren','tx_asigned':'loren','tx_uprom':'loren','tx_umax':'loren','rx_asigned':'loren','rx_uprom':'loren','rx_umax':'loren'},{'service':'loren','subservice':'loren','tx_asigned':'loren','tx_uprom':'loren','tx_umax':'loren','rx_asigned':'loren','rx_uprom':'loren','rx_umax':'loren'}],
-				tab_ut_serv_gpu:[{'service':'loren','subservice':'loren','gpu_core_asigned':'loren','gpu_core_uprom':'loren','gpu_core_umax':'loren','gpu_ram_asigned':'loren','gpu_ram_uprom':'loren','gpu_ram_umax':'loren'},{'service':'loren','subservice':'loren','gpu_core_asigned':'loren','gpu_core_uprom':'loren','gpu_core_umax':'loren','gpu_ram_asigned':'loren','gpu_ram_uprom':'loren','gpu_ram_umax':'loren'}],
+				tab_ut_serv:[{'service':'loren1','subservice':'loren2','cpu_asigned':'loren3','cpu_uprom':'loren4','cpu_umax':'loren5','ram_asigned':'loren6','ram_uprom':'loren7','ram_umax':'loren8','asigned':'loren9','use':'loren10','thru_asigned':'loren11','thru_uprom':'loren12','thru_umax':'loren13','subentity':'loren14','cpu':'loren15','uprom_r':'loren16','uprom_w':'loren17','umax_r':'loren18','umax_w':'loren19','tx_uprom':'loren20','tx_umax':'loren21','rx_asigned':'loren22','rx_uprom':'loren23','rx_umax':'loren24','gpu_core_asigned':'loren25','gpu_core_uprom':'loren26','gpu_core_umax':'loren27','gpu_ram_asigned':'loren28','gpu_ram_uprom':'loren29','gpu_ram_umax':'loren30'}],
+				
 
 
 				tabla_servicios:[

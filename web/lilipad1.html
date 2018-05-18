@@ -18,6 +18,7 @@
 				load_table(2,'existentes')
 				load_table(2,'futuros')
 				load_table(3,'iaas')
+				load_table(3,'dsaas')
 			async function load_table(step,table){
 				switch (step) {
 					case 1:
@@ -54,6 +55,9 @@
 
 					case 'iaas':
 					app.tabla_iaas = value;
+
+					case 'dsaas':
+					app.tabla_dsaas = value;
 				}
 				// break;
 				
@@ -204,23 +208,12 @@
 				
 						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
 							<md-table-cell md-label="Subentidad" md-sort-by="subentity" md-numeric>{{ item.subentity }}</md-table-cell>
-							<md-table-cell md-label="CPU [%]" md-sort-by="cpu">{{item.cpu}}</md-table-cell>
-							<md-table-cell md-label="RAM [MB]" md-sort-by="ram">{{item.ram}}</md-table-cell>
-							<md-table-cell style='background-color:slategrey' md-label="Capacidad [GB]" md-sort-by="capacity">{{item.capacity}}</md-table-cell>
-							<md-table-cell style='background-color:slategrey' md-label="Throughput [Mbps]" md-sort-by="throughput">{{item.throughput}}</md-table-cell>
-							<md-table-cell style='background-color:silver' md-label="Tx [Mbps]" md-sort-by="transmission">{{item.transmission}}</md-table-cell>
-							<md-table-cell style='background-color:silver' md-label="Rx [Mbps]" md-sort-by="reception">{{item.reception}}</md-table-cell>
-							<md-table-cell style='background-color:red' md-label="Nucleos [%]" md-sort-by="gpucore">{{item.gpucore}}</md-table-cell>
-							<md-table-cell style='background-color:red' md-label="Memoria [MB]" md-sort-by="gpumem">{{item.gpumem}}</md-table-cell>
-				
+							<md-table-cell style='background-color:slategrey' md-label="Almacenamiento" md-sort-by="storage">{{item.storage}}</md-table-cell>
+							<md-table-cell style='background-color:slategrey' md-label="Salvas" md-sort-by="saves">{{item.saves}}</md-table-cell>
 						</md-table-row>
 						<h3> Codigo de colores:
 							<span style='color:slategrey'>
-								<br> -Almacenamiento </span>
-							<span style='color:silver'>
-								<br> -Red </span>
-							<span style='color:red'>
-								<br> -GPU </span>
+								<br> -Capacidad asignada [GB] </span>
 						</h3>
 				
 					</md-table>
@@ -545,6 +538,32 @@
 				<md-button class="md-primary" @click="new_service(new_srv,{'subentity':iaas_subentity,'cpu':iaas_cpu,'ram':iaas_ram,'cap_alm':iaas_cap_alm,'thru_alm':iaas_thru_alm,'trans_net':iaas_trans_net,'rec_net':iaas_rec_net,'core_gpu':iaas_core_gpu,'mem_gpu':iaas_mem_gpu})">Crear</md-button>
 			</md-dialog-actions>
 		</div>
+		<div v-if="new_srv == 'dsaas'">
+			<md-tabs md-dynamic-height class="md-primary">
+				<md-tab md-label="Agregar recurso DSaaS">
+					<md-field>
+						<label>Subentidad</label>
+						<md-input v-model="dsaas_subentity" required></md-input>
+					</md-field>
+		
+					<md-field>
+						<label>Almacenamiento</label>
+						<md-input v-model="dsaas_storage" required></md-input>
+					</md-field>
+		
+					<md-field>
+						<label>Salvas</label>
+						<md-input v-model="dsaas_saves" required></md-input>
+					</md-field>
+					
+					
+				</md-tab>
+			</md-tabs>
+		
+			<md-dialog-actions>
+		<md-button class="md-primary" @click="new_service(new_srv,{'subentity':dsaas_subentity,'storage':dsaas_storage,'saves':dsaas_saves})">Crear</md-button>
+			</md-dialog-actions>
+		</div>
 		
 				<md-dialog-actions>
 					<md-button class="md-primary" @click="add_srv=false,srv_class='',srv_comments=null,srv_criticity='',srv_name=null,srv_structure='',srv_type=null,tab_service='',tab_subservice='',tab_vm='',tab_node=''">Cerrar</md-button>
@@ -649,6 +668,9 @@
 				iaas_rec_net:'',
 				iaas_core_gpu:'',
 				iaas_mem_gpu:'',
+				dsaas_subentity:'',
+				dsaas_storage:'',
+				dsaas_saves:'',
 				ruta_nav:'',
 				usr_list:'',
 				date_nav_inf:'',
@@ -728,11 +750,15 @@
 							break;
 							
 						case 'tab_serv':
-							app.tabla_servicios.push(dict)
+							app.tabla_servicios.push(dict);
 							break;
 
 						case 'iaas':
-							app.tabla_iaas.push(dict)
+							app.tabla_iaas.push(dict);
+							break;
+
+						case 'dsaas':
+							app.tabla_dsaas.push(dict);
 							break;
 
 					}

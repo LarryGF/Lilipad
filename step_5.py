@@ -1,7 +1,7 @@
 import json,os
 import zabixmaster as zb
 import opennebula 
-from readingdbmodif import percetil,rank,mean
+from readingdbmodif import percentil,rank,mean
 from step2 import *
  
 def step5 (servicio,user,passw,db_addr,start_time,end_time):

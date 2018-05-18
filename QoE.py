@@ -91,5 +91,5 @@ def create_err_dict(status,index):
         dic[status]+=1
     else:
         dic[status]=1
-if __name__=='__main__':
-    main()
+# if __name__=='__main__':
+#     main()

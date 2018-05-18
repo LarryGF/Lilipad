@@ -1,6 +1,10 @@
 Tabla 2.6. Servicios, sub-servicios, localización. Paso 2(falta)
 
-paso 4 : una vez que el usuario selecicon euna de las pruebas, mandarle step4, srvicio(correo o navegacion)
 
 correo:ruta del archivo log, mes y dia
 navegacion: ruta del log, lista de usuario, tiempo de inicio y tiempo final 
+
+paso3 : tabla de DSaaS, aparentemente ahora se parte cuando agregas cosas y no lo agrega
+paso4 : una vez que el usuario selecicon euna de las pruebas, mandarle step4, srvicio(correo o navegacion)
+paso5 : no estoy seguro de que pinche
+paso6 : retocar el paso6.py para que me devuleva lo que me hace falta

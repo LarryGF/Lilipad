@@ -17,7 +17,7 @@
 				load_table(2,'nuevos')
 				load_table(2,'existentes')
 				load_table(2,'futuros')
-				
+				load_table(3,'iaas')
 			async function load_table(step,table){
 				switch (step) {
 					case 1:
@@ -51,6 +51,9 @@
 					case 'futuros':
 					app.serv_futuros = value;
 					break;
+
+					case 'iaas':
+					app.tabla_iaas = value;
 				}
 				// break;
 				
@@ -411,7 +414,8 @@
 
 		
 		<md-dialog :md-active.sync="add_srv" :md-click-outside-to-close="false">
-			<div v-if="new_srv != 'tab_serv'">
+			<md-dialog-content>
+			<div v-if="new_srv =='nuevos' || new_srv=='existentes' ||  new_srv == 'futuros'">
 			<md-tabs md-dynamic-height class="md-primary">
 				<md-tab md-label="Nuevo Servicio">
 					<md-field>
@@ -487,9 +491,65 @@
 			</md-dialog-actions>
 		
 		</div>
+		<div v-if="new_srv == 'iaas'">
+			<md-tabs md-dynamic-height class="md-primary">
+				<md-tab md-label="Agregar recurso IaaS">
+					<md-field>
+						<label>Subentidad</label>
+						<md-input v-model="iaas_subentity" required></md-input>
+					</md-field>
+		
+					<md-field>
+						<label>CPU (%)</label>
+						<md-input v-model="iaas_cpu" required></md-input>
+					</md-field>
+		
+					<md-field>
+						<label>RAM (MB)</label>
+						<md-input v-model="iaas_ram" required></md-input>
+					</md-field>
+					
+					<md-field>
+						<label>Capacidad (Almacenamiento)</label>
+						<md-input v-model="iaas_cap_alm" required></md-input>
+					</md-field>
+
+					<md-field>
+						<label>Throughput (Almacenamiento)</label>
+						<md-input v-model="iaas_thru_alm" required></md-input>
+					</md-field>
+
+					<md-field>
+						<label>Transmision (Red)</label>
+						<md-input v-model="iaas_trans_net" required></md-input>
+					</md-field>
+
+					<md-field>
+						<label>Recepcion (Red)</label>
+						<md-input v-model="iaas_rec_net" required></md-input>
+					</md-field>
+
+					<md-field>
+						<label>Nucleos (GPU)</label>
+						<md-input v-model="iaas_core_gpu" required></md-input>
+					</md-field>
+
+					<md-field>
+						<label>Memoria (GPU)</label>
+						<md-input v-model="iaas_mem_gpu" required></md-input>
+					</md-field>
+				</md-tab>
+			</md-tabs>
+		
+			<md-dialog-actions>
+				<md-button class="md-primary" @click="new_service(new_srv,{'subentity':iaas_subentity,'cpu':iaas_cpu,'ram':iaas_ram,'cap_alm':iaas_cap_alm,'thru_alm':iaas_thru_alm,'trans_net':iaas_trans_net,'rec_net':iaas_rec_net,'core_gpu':iaas_core_gpu,'mem_gpu':iaas_mem_gpu})">Crear</md-button>
+			</md-dialog-actions>
+		</div>
+		
 				<md-dialog-actions>
 					<md-button class="md-primary" @click="add_srv=false,srv_class='',srv_comments=null,srv_criticity='',srv_name=null,srv_structure='',srv_type=null,tab_service='',tab_subservice='',tab_vm='',tab_node=''">Cerrar</md-button>
 				</md-dialog-actions>
+		</md-dialog-content>
 		</md-dialog>
 
 <md-dialog :md-active.sync="step_4" :md-click-outside-to-close="false" style="width:50%">
@@ -580,6 +640,15 @@
 				tab_subservice:'',
 				tab_vm:'',
 				tab_node:'',
+				iaas_subentity:'',
+				iaas_cpu:'',
+				iaas_ram:'',
+				iaas_cap_alm:'',
+				iaas_thru_alm:'',
+				iaas_trans_net:'',
+				iaas_rec_net:'',
+				iaas_core_gpu:'',
+				iaas_mem_gpu:'',
 				ruta_nav:'',
 				usr_list:'',
 				date_nav_inf:'',
@@ -615,12 +684,7 @@
 
 				],
 				tabla_iaas: [
-					{'subentity':'Ni idea','cpu':'55','ram':'4','capacity':'500','throughput':'50','transmission':'30','reception':'34','gpucore':'34','gpumem':'4'},
-					{ 'subentity': 'Ni idea', 'cpu': '55', 'ram': '4', 'capacity': '500', 'throughput': '50', 'transmission': '30', 'reception': '34', 'gpucore': '34', 'gpumem': '4' },
-					{ 'subentity': 'Ni idea', 'cpu': '55', 'ram': '4', 'capacity': '500', 'throughput': '50', 'transmission': '30', 'reception': '34', 'gpucore': '34', 'gpumem': '4' },
-					{ 'subentity': 'Ni idea', 'cpu': '55', 'ram': '4', 'capacity': '500', 'throughput': '50', 'transmission': '30', 'reception': '34', 'gpucore': '34', 'gpumem': '4' },
-					{ 'subentity': 'Ni idea', 'cpu': '55', 'ram': '4', 'capacity': '500', 'throughput': '50', 'transmission': '30', 'reception': '34', 'gpucore': '34', 'gpumem': '4' }
-
+					
 				],
 
 			},
@@ -665,6 +729,11 @@
 							
 						case 'tab_serv':
 							app.tabla_servicios.push(dict)
+							break;
+
+						case 'iaas':
+							app.tabla_iaas.push(dict)
+							break;
 
 					}
 					console.log(app.serv_existentes)

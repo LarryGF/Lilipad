@@ -1,0 +1,7 @@
+avg delay,emails send,emails with errors
+0.651,957,48
+,,
+,,
+error_cause,number of errors,percentage of total
+"Message would exceed mailbox quota
+",48,100.0

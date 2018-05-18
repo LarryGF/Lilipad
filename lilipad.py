@@ -55,6 +55,9 @@ def load(step,table_list):
         return result
 @eel.expose
 def tests(dictionary):
-    step_4(dictionary) 
+    var=step_4(dictionary) 
+    print('hey')
+    print(var)
+    return "El archivo 'general_data.csv' esta listo con sus datos"
 
 eel.start('lilipad1.html')

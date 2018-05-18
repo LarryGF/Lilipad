@@ -65,6 +65,7 @@
 
 			async function tests(dictionary) {
 				let result = await eel.tests(dictionary)();
+				app.message = result;
 			}
 
 		</script>
@@ -225,6 +226,8 @@
 				<h3>Escoja cual de las pruebas desea realizar</h3>
 					<md-button class="md-primary" @click="step_4=true,step_4_sel='correo'">Correo</md-button>
 					<md-button class="md-primary" @click="step_4=true,step_4_sel='navegacion'">Navegacion</md-button>
+
+					
 
 			</md-tab>
 
@@ -581,10 +584,13 @@
 				</md-field>
 
 				<md-field>
-					<label>Fecha (en la forma DDMMYYYY)</label>
+					<label>Fecha (en la forma MMDD)</label>
 					<md-input v-model="date_mail" required></md-input>
 				</md-field>
 
+				<h2>Sea paciente, el proceso puede tomar varios minutos</h2>
+				<h3>{{message}}</h3>
+				<br><br>
 				
 			</md-tab>
 		</md-tabs>
@@ -635,6 +641,7 @@
 		const app = new Vue({
 			el: "#app",
 			data: {
+				message:'',
 				ruta_mail:'',
 				date_mail:'',
 				step_4:false,

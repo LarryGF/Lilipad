@@ -34,6 +34,8 @@ def handler(step,table,dictio):
     print(dictio)
     if step == 1:
         step_1(dictio)
+    elif step == 5:
+        step5(dictio['service'],dictio['user'],dictio['password'],dictio['ip'],dictio['start_time'],dictio['end_time'])
     else:
         write(table,dictio)
 

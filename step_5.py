@@ -2,9 +2,23 @@ import json,os
 import zabixmaster as zb
 import opennebula 
 from readingdbmodif import percentil,rank,mean
-from step_2 import l5
+
+def l5(table_name):
+    for root,dirs,files in os.walk(os.getcwd()):
+        for file in files:
+            if file == str(table_name)+'.json':
+                path = os.path.join(root,file)
+                
+            # try:
+                with open(path) as f:
+                    dic = json.load(f)
+                return dic
+                
+            
+
  
 def step5 (servicio,user,passw,db_addr,start_time,end_time):
+    print(servicio,user,passw,db_addr,start_time,end_time)
     values_avg = []
     max_values = []
     step6_sum = {}
@@ -83,3 +97,5 @@ def step5 (servicio,user,passw,db_addr,start_time,end_time):
             with open ('{}.json'.format(os.path.join(os.getcwd(),'step6',servicio)),'w') as f:
                 ##Guardar en directorio step6, archivo con nombre del servicio conteniendo la sumatoria descrita anteriormente
                 json.dump(step6_sum,f)
+
+            print('success')

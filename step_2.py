@@ -22,18 +22,6 @@ def load(table_name):
             #     dic={}
             #     with open('{}.json'.format(table_name),'w') as f:
             #         json.dump(dic,f)
-def l5(table_name):
-    for root,dirs,files in os.walk(os.getcwd()):
-        for file in files:
-            if file == str(table_name)+'.json':
-                path = os.path.join(root,file)
-                
-            # try:
-                with open(path) as f:
-                    dic = json.load(f)
-                return dic
-                
-            
 
 def write(table_name,lista):###nos devuelve nombre da tabla y lista con filas
     with root,dirs,files in os.walk(os.getcwd()):

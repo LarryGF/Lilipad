@@ -2,6 +2,7 @@ import json,os
 import zabixmaster as zb
 import opennebula 
 from readingdbmodif import percentil,rank,mean
+from step_6 import *
 
 def l5(table_name):
     for root,dirs,files in os.walk(os.getcwd()):
@@ -99,3 +100,4 @@ def step5 (servicio,user,passw,db_addr,start_time,end_time):
                 json.dump(step6_sum,f)
 
             print('success')
+    load_step6(servicio)

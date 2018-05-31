@@ -4,6 +4,7 @@ from step_1 import step_1,step_1_load
 # from step2 import step2_write,step2_load
 from step_4 import *
 from step_5 import *
+from step_6 import *
 
 
 
@@ -50,6 +51,10 @@ def load(step,table_list):
     if step == 1:
         values = step_1_load()
         return values
+
+    # elif step == 6:
+    #     values = load_step6(table_list)
+    #     return values
 
     else:
         print(step,table_list)

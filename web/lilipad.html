@@ -193,6 +193,7 @@
 							<h1 class="md-title">Recursos asignados IaaS</h1>
 							<md-button class="md-raised md-primary" @click="send(3,tabla_iaas)">Guardar</md-button>
 							<md-button class="md-raised md-primary" @click="change('iaas')">Nuevo</md-button>
+							<md-button class="md-raised md-primary" @click="delete(selected)">Borrar</md-button>
 						</md-table-toolbar>
 				
 						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
@@ -281,9 +282,11 @@
 			</md-tab>
 			<md-tab id="paso6" md-label="Paso 6" >
 				<div >
+					{{ selected }}
 					<md-table @md-selected="onSelect" v-model="tab_ut_serv" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
 						<md-table-toolbar>
 							<h1 class="md-title">Utilizacion de Servicios</h1>
+									<md-button class="md-primary" @click="delete('loren')">Enviar</md-button>
 						</md-table-toolbar>
 				
 						<md-table-row md-selectable="multiple" md-auto-select slot="md-table-row" slot-scope="{ item }">
@@ -817,7 +820,21 @@
 				},
 				onSelect(items) {
 					this.selected = items
+					console.log(this)
 				},
+
+				delete(selected) {
+					console.log('algo')
+					console.log(selected)
+					// for (selection in selected){
+					// 	console.log(selection)
+					// 	var index = this.tab_ut_serv.indexOf(selection)
+					// 	console.log(index)
+					// 	this.tab_ut_serv.splice(index,1)
+					// }
+
+
+				}
 
 				
 
